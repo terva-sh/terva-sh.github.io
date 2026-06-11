@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<!--
+  Vanity-import page for the terva module: the phase-3 prerequisite
+  from docs/plans/rename-terva.md. Deploy so that
+  https://terva.sh/terva (any path under it, with or without
+  ?go-get=1) serves this document — a static host with one rewrite
+  rule is enough.
+
+  The go-import meta is what `go get terva.sh/terva` resolves; the
+  module's code identity stays terva.sh/terva forever while the
+  backing repo (currently github.com/terva-sh/terva, the public
+  mirror fed by release-cut) can move with zero import rewrites —
+  the filippo.io/age pattern.
+
+  go-source makes pkg.go.dev link source listings. The mirror's
+  default branch is `release` (release-cut publishes curated release
+  branches, never day-to-day history); update the two branch
+  references here if that ever changes.
+
+  Humans land on the mirror via the redirect below.
+-->
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="go-import" content="terva.sh/terva git https://github.com/terva-sh/terva">
+  <meta name="go-source" content="terva.sh/terva https://github.com/terva-sh/terva https://github.com/terva-sh/terva/tree/release{/dir} https://github.com/terva-sh/terva/blob/release{/dir}/{file}#L{line}">
+  <meta http-equiv="refresh" content="0; url=https://github.com/terva-sh/terva">
+  <title>terva.sh/terva</title>
+</head>
+<body>
+  <p>Redirecting to <a href="https://github.com/terva-sh/terva">github.com/terva-sh/terva</a>…</p>
+</body>
+</html>
