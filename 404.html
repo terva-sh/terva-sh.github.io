@@ -6,15 +6,50 @@
   404, and the go tool parses go-import meta out of the 404 body —
   the standard GitHub Pages vanity-domain pattern. Verify with a real
   `go get` once DNS + Pages are live.
+
+  The go-import / go-source meta below is the load-bearing part; the
+  body styling is purely for humans who land on a bad URL.
 -->
 <html lang="en">
 <head>
   <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="go-import" content="terva.sh/terva git https://github.com/terva-sh/terva">
   <meta name="go-source" content="terva.sh/terva https://github.com/terva-sh/terva https://github.com/terva-sh/terva/tree/release{/dir} https://github.com/terva-sh/terva/blob/release{/dir}/{file}#L{line}">
-  <title>terva.sh</title>
+  <title>404 — terva.sh</title>
+  <meta name="robots" content="noindex">
+  <meta name="theme-color" content="#11100E">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="/favicon.ico" sizes="32x32">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <style>
+    body {
+      margin: 0; min-height: 100vh;
+      display: flex; align-items: center; justify-content: center;
+      background: #11100E; color: #C7C1B2;
+      font-family: ui-monospace, "JetBrains Mono", "Cascadia Code", "SF Mono", Menlo, Consolas, monospace;
+      line-height: 1.65; text-align: center;
+    }
+    ::selection { background: #D9902F; color: #11100E; }
+    a { color: #D9902F; text-decoration: none; }
+    a:hover, a:focus-visible { color: #F2B84B; text-decoration: underline; text-underline-offset: 0.2em; }
+    main { padding: 2rem 1.25rem; }
+    img { width: 96px; height: 96px; }
+    h1 { color: #F5F1E8; font-size: 1.3rem; font-weight: 600; margin: 1.25rem 0 0.25rem; }
+    h1 span { color: #F29100; }
+    p { margin: 0.4rem 0; }
+    .faint { color: #7A7979; font-size: 0.9rem; }
+  </style>
 </head>
 <body>
-  <p>Not found. Looking for <a href="https://github.com/terva-sh/terva">github.com/terva-sh/terva</a>?</p>
+  <main>
+    <img src="/assets/terva-logo-transparent.svg" alt="">
+    <h1><span>*</span> 404 — not found</h1>
+    <p>Nothing lives at this path.</p>
+    <p><a href="/">terva.sh</a> · <a href="https://github.com/terva-sh/terva">github.com/terva-sh/terva</a></p>
+    <p class="faint">If you came here via <code>go get</code>, the go-import
+       meta on this page already pointed your toolchain the right way.</p>
+  </main>
 </body>
 </html>
