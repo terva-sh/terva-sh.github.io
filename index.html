@@ -7,20 +7,20 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Terva — a coding agent harness</title>
-  <meta name="description" content="Terva is a lightweight coding agent harness written in Go: one static binary, 25+ built-in model providers, extensions and chat connectors in any language. Harness the wildcard.">
+  <title>Terva — an agent harness</title>
+  <meta name="description" content="Terva is an agent harness written in Go — a coding agent out of the box, open to anything you can wire a tool to. One static binary, 25+ model providers, front ends for terminal, editor, and chat, extensible in any language. Harness the wildcard.">
   <link rel="canonical" href="https://terva.sh/">
   <meta name="theme-color" content="#11100E">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://terva.sh/">
-  <meta property="og:title" content="Terva — a coding agent harness">
-  <meta property="og:description" content="One static binary, 25+ built-in model providers, extensions and chat connectors in any language. Harness the wildcard.">
+  <meta property="og:title" content="Terva — an agent harness">
+  <meta property="og:description" content="A coding agent out of the box, open to anything you can wire a tool to. One static binary, 25+ model providers, extensible in any language. Harness the wildcard.">
   <meta property="og:image" content="https://terva.sh/assets/terva-lockup.png">
   <meta property="og:image:width" content="1364">
   <meta property="og:image:height" content="510">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Terva — a coding agent harness">
-  <meta name="twitter:description" content="One static binary, 25+ built-in model providers, extensions and chat connectors in any language. Harness the wildcard.">
+  <meta name="twitter:title" content="Terva — an agent harness">
+  <meta name="twitter:description" content="A coding agent out of the box, open to anything you can wire a tool to. One static binary, 25+ model providers, extensible in any language. Harness the wildcard.">
   <meta name="twitter:image" content="https://terva.sh/assets/terva-lockup.png">
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <link rel="icon" href="/favicon.ico" sizes="32x32">
@@ -182,9 +182,9 @@
     <h1 class="visually-hidden">Terva — harness the wildcard</h1>
     <img src="/assets/terva-lockup.svg" alt="Terva — harness the wildcard" width="640" height="239">
     <p class="pitch">
-      A <strong>coding agent harness</strong> — lightweight and written
-      in Go. One static binary; providers, extensions, and chat
-      connectors all the way down.
+      An <strong>agent harness</strong> — a coding agent out of the box,
+      open to anything you can wire a tool to. One static binary: one
+      hardened core, many front ends, pluggable in any language.
     </p>
     <div class="get">
       <pre data-copy="go install terva.sh/terva/cmd/terva@latest"><code><span class="prompt">$ </span><span class="cmd">go install terva.sh/terva/cmd/terva@latest</span><span class="cursor" aria-hidden="true"></span></code></pre>
@@ -210,9 +210,10 @@
            twenty more built in — plus any OpenAI-compatible endpoint.</p>
       </article>
       <article>
-        <h3>Extensions in any language</h3>
-        <p>Separate executables speaking JSON-RPC over subprocess. None
-           installed by default; opt in with <code>terva ext install</code>.</p>
+        <h3>Operate any tool</h3>
+        <p>Extensions, MCP servers, and hooks in any language — JSON-RPC over
+           subprocess — let terva drive services, hardware, or your own
+           systems, not just files.</p>
       </article>
       <article>
         <h3>Chat connectors</h3>
@@ -220,15 +221,16 @@
            language over a small versioned JSON protocol.</p>
       </article>
       <article>
-        <h3>Three run modes</h3>
-        <p>Interactive TUI, <code>-p</code> print, <code>--json</code>
-           event stream — the same harness in your terminal and your
-           scripts.</p>
+        <h3>Many front ends</h3>
+        <p>One engine in your terminal, your editor (over ACP), and chat —
+           plus <code>-p</code> print, <code>--json</code>, and a JSON-RPC
+           server to embed it.</p>
       </article>
       <article>
-        <h3>Typed and tested</h3>
-        <p>Typed contracts between harness parts, golden protocol tests,
-           and an end-to-end harness backing every change.</p>
+        <h3>Consolidated &amp; tested</h3>
+        <p>One loop, one event wire, one policy — typed contracts, not
+           parallel reimplementations — with golden and end-to-end harnesses
+           backing every change.</p>
       </article>
     </div>
   </section>
@@ -280,10 +282,12 @@ make build"><code><span class="prompt">$ </span><span class="cmd">git clone http
     <span class="rule" aria-hidden="true"></span>
     <p><em>terva</em> is Finnish for pine tar: the traditional preservative
        and cure-all.</p>
-    <p>Formerly zot — a hard fork of
+    <p>A hard fork of
        <a href="https://github.com/patriceckhart/zot">patriceckhart/zot</a>,
-       renamed once it diverged too far to carry upstream's name. Existing
-       zot installs keep working unchanged; see
+       renamed once it diverged too far to carry upstream's name — focused on
+       hardening the seams and widening the surface. zot continues upstream;
+       terva is its own project, not a replacement. Existing zot installs keep
+       working unchanged; see
        <a href="https://github.com/terva-sh/terva/blob/release/docs/fork.md">the
        compat story</a>.</p>
     <p><a href="https://github.com/terva-sh/terva">github.com/terva-sh/terva</a>
