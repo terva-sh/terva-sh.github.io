@@ -199,6 +199,10 @@
       grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr)); }
     .triad-wide li { margin: 0; }
     section[aria-labelledby="beyond-h"] .split { align-items: center; }
+    /* beyond: full-width prose below the split (the note + the example caption).
+       Own classes, not crew-cap (which is intentionally capped for the crew). */
+    .beyond-note { margin: 2rem 0 0; color: var(--ink); font-size: 0.95rem; }
+    .beyond-cap { margin: 2.75rem 0 0; color: var(--ink); font-size: 0.95rem; }
 
     /* terminal mock */
     .term { border: 1px solid var(--slate); border-radius: 8px; overflow: hidden; }
@@ -433,14 +437,6 @@
           Compose the layers — a <b>persona</b> (who), an <b>extension</b> (what),
           a <b>connector</b> (where) — and point them away from a repo.
         </p>
-        <p style="font-size:0.92rem; margin:0 0 1.25rem;">
-          An extension doesn't have to be a tool — it can be a whole
-          <b style="color:var(--birch)">world</b>, or a bridge to a real one. Its
-          tools become the agent's senses and hands, its state the world's
-          memory, a live context card its awareness of its surroundings. The
-          agent perceives, decides, and acts — the same loop that edits code,
-          pointed at a simulation, a service, or a piece of hardware.
-        </p>
       </div>
       <div class="split-media">
         <div class="term">
@@ -451,12 +447,20 @@
         </div>
       </div>
     </div>
+    <p class="beyond-note">
+      An extension doesn't have to be a tool — it can be a whole
+      <b style="color:var(--birch)">world</b>, or a bridge to a real one. Its
+      tools become the agent's senses and hands, its state the world's
+      memory, a live context card its awareness of its surroundings. The
+      agent perceives, decides, and acts — the same loop that edits code,
+      pointed at a simulation, a service, or a piece of hardware.
+    </p>
     <ul class="triad triad-wide">
       <li><span class="who">--play</span> — <b>act</b> in a world through its tools</li>
       <li><span class="who">--chat</span> — <b>talk</b> with a character, no tools</li>
       <li><span class="who">a connector</span> — <b>play</b> it from a chat thread</li>
     </ul>
-    <p class="crew-cap">
+    <p class="beyond-cap">
       The repo ships a worked example — <code>examples/extensions/world</code>, a
       procedural place an explorer travels through tools (look, travel, gather)
       with persisted state and a map — and the
