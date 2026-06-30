@@ -416,6 +416,49 @@
     </div>
   </section>
 
+  <section aria-labelledby="beyond-h" class="reveal">
+    <p class="eyebrow">more than code</p>
+    <h2 id="beyond-h">beyond the codebase</h2>
+    <div class="split">
+      <div class="split-body">
+        <p class="lead">
+          terva ships as a coding agent, but the harness underneath is general.
+          Compose the layers — a <b>persona</b> (who), an <b>extension</b> (what),
+          a <b>connector</b> (where) — and point them away from a repo.
+        </p>
+        <p style="font-size:0.92rem; margin:0 0 1.25rem;">
+          An extension doesn't have to be a tool — it can be a whole
+          <b style="color:var(--birch)">world</b>, or a bridge to a real one. Its
+          tools become the agent's senses and hands, its state the world's
+          memory, a live context card its awareness of its surroundings. The
+          agent perceives, decides, and acts — the same loop that edits code,
+          pointed at a simulation, a service, or a piece of hardware.
+        </p>
+        <ul class="triad">
+          <li><span class="who">--play</span> — <b>act</b> in a world through its tools</li>
+          <li><span class="who">--chat</span> — <b>talk</b> with a character, no tools</li>
+          <li><span class="who">a connector</span> — <b>play</b> it from a chat thread</li>
+        </ul>
+      </div>
+      <div class="split-media">
+        <div class="term">
+          <div class="term-bar">terva — beyond code</div>
+          <pre><code><span class="prompt">$ </span><span class="cmd">terva </span><span class="flag">--play --ext</span><span class="cmd"> ./world</span>        <span class="comment"># act in a simulated world</span>
+<span class="prompt">$ </span><span class="cmd">terva </span><span class="flag">--chat --persona</span><span class="cmd"> ./char.md</span>  <span class="comment"># a character to talk with</span>
+<span class="prompt">$ </span><span class="cmd">terva bot run </span><span class="flag">--idle-nudge</span><span class="cmd"> 30m</span>     <span class="comment"># a bot that breaks the silence</span><span class="cursor" aria-hidden="true"></span></code></pre>
+        </div>
+      </div>
+    </div>
+    <p class="crew-cap">
+      The repo ships a worked example — <code>examples/extensions/world</code>, a
+      procedural place an explorer travels through tools (look, travel, gather)
+      with persisted state and a map — and the
+      <a href="https://github.com/terva-sh/terva/blob/release/docs/personas.md">persona</a>
+      and <a href="https://github.com/terva-sh/terva/blob/release/docs/extensions.md">extension</a>
+      docs show how to give an agent a world of your own.
+    </p>
+  </section>
+
   <section aria-labelledby="usage-h" class="reveal">
     <p class="eyebrow">drive it</p>
     <h2 id="usage-h">usage</h2>
