@@ -192,6 +192,13 @@
     .triad li { margin: 0.35rem 0; font-size: 0.92rem; }
     .triad b { color: var(--birch); }
     .triad .who { color: var(--hot); }
+    /* triad as a full-width band below a split, and balanced columns
+       (beyond the codebase): the short terminal centers next to the text
+       instead of stalling at the top with dead space below. */
+    .triad-wide { margin-top: 1.75rem; display: grid; gap: 0.5rem 1.5rem;
+      grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr)); }
+    .triad-wide li { margin: 0; }
+    section[aria-labelledby="beyond-h"] .split { align-items: center; }
 
     /* terminal mock */
     .term { border: 1px solid var(--slate); border-radius: 8px; overflow: hidden; }
@@ -434,11 +441,6 @@
           agent perceives, decides, and acts — the same loop that edits code,
           pointed at a simulation, a service, or a piece of hardware.
         </p>
-        <ul class="triad">
-          <li><span class="who">--play</span> — <b>act</b> in a world through its tools</li>
-          <li><span class="who">--chat</span> — <b>talk</b> with a character, no tools</li>
-          <li><span class="who">a connector</span> — <b>play</b> it from a chat thread</li>
-        </ul>
       </div>
       <div class="split-media">
         <div class="term">
@@ -449,6 +451,11 @@
         </div>
       </div>
     </div>
+    <ul class="triad triad-wide">
+      <li><span class="who">--play</span> — <b>act</b> in a world through its tools</li>
+      <li><span class="who">--chat</span> — <b>talk</b> with a character, no tools</li>
+      <li><span class="who">a connector</span> — <b>play</b> it from a chat thread</li>
+    </ul>
     <p class="crew-cap">
       The repo ships a worked example — <code>examples/extensions/world</code>, a
       procedural place an explorer travels through tools (look, travel, gather)
