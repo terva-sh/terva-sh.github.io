@@ -8,19 +8,19 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Terva — an agent harness</title>
-  <meta name="description" content="Terva is an agent harness written in Go — a coding agent out of the box, open to anything you can wire a tool to. One static binary, 25+ model providers, front ends for terminal, editor, and chat, extensible in any language. Harness the wildcard.">
+  <meta name="description" content="Terva is an agent harness in a single static Go binary — a coding agent out of the box, open to anything you can wire a tool to. 25+ model providers, swappable personas, guardrails by default, front ends for terminal, editor, and chat, extensible in any language. Harness the wildcard.">
   <link rel="canonical" href="https://terva.sh/">
   <meta name="theme-color" content="#11100E">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://terva.sh/">
   <meta property="og:title" content="Terva — an agent harness">
-  <meta property="og:description" content="A coding agent out of the box, open to anything you can wire a tool to. One static binary, 25+ model providers, extensible in any language. Harness the wildcard.">
+  <meta property="og:description" content="A coding agent out of the box, open to anything you can wire a tool to. One static binary, 25+ model providers, swappable personas, guardrails by default, extensible in any language. Harness the wildcard.">
   <meta property="og:image" content="https://terva.sh/assets/terva-lockup.png">
   <meta property="og:image:width" content="1364">
   <meta property="og:image:height" content="510">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Terva — an agent harness">
-  <meta name="twitter:description" content="A coding agent out of the box, open to anything you can wire a tool to. One static binary, 25+ model providers, extensible in any language. Harness the wildcard.">
+  <meta name="twitter:description" content="A coding agent out of the box, open to anything you can wire a tool to. One static binary, 25+ model providers, swappable personas, extensible in any language. Harness the wildcard.">
   <meta name="twitter:image" content="https://terva.sh/assets/terva-lockup.png">
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <link rel="icon" href="/favicon.ico" sizes="32x32">
@@ -31,7 +31,9 @@
       --tar: #11100E;          /* Tar Black — page ground, matches the lockup rect */
       --deep-tar: #0A0A09;     /* Deep Tar — terminal + code wells */
       --charcoal: #1B1D1E;     /* Charcoal — cards */
+      --charcoal-2: #16191A;   /* slightly deeper card for alt sections */
       --slate: #2E343B;        /* Slate — borders */
+      --slate-soft: #23272c;   /* softer hairline */
       --birch: #F5F1E8;        /* Birch White — headings */
       --ink: #C7C1B2;          /* dimmed birch — body text */
       --faint: #7A7979;        /* lockup gray — comments, fine print */
@@ -42,6 +44,8 @@
       --mint: #6EE7B7;         /* Terminal Mint — prompts */
     }
     * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
     body {
       margin: 0;
       background: var(--tar);
@@ -49,31 +53,63 @@
       font-family: ui-monospace, "JetBrains Mono", "Cascadia Code", "SF Mono", Menlo, Consolas, monospace;
       font-size: 1rem;
       line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
     }
     ::selection { background: var(--amber); color: var(--tar); }
     a { color: var(--amber); text-decoration: none; }
     a:hover, a:focus-visible { color: var(--hot); text-decoration: underline; text-underline-offset: 0.2em; }
     :focus-visible { outline: 2px solid var(--cursor); outline-offset: 2px; }
-    main { max-width: 62rem; margin: 0 auto; padding: 0 1.25rem; }
+    main { max-width: 64rem; margin: 0 auto; padding: 0 1.25rem; }
     .visually-hidden {
       position: absolute; width: 1px; height: 1px; margin: -1px;
       clip-path: inset(50%); overflow: hidden; white-space: nowrap;
     }
 
+    /* progressive scroll reveal — content is visible without JS */
+    html.js .reveal {
+      opacity: 0; transform: translateY(10px);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+    html.js .reveal.in { opacity: 1; transform: none; }
+    @media (prefers-reduced-motion: reduce) {
+      html.js .reveal { opacity: 1; transform: none; transition: none; }
+    }
+
+    /* eyebrow + section heads */
+    .eyebrow {
+      color: var(--orange); font-size: 0.78rem; letter-spacing: 0.18em;
+      text-transform: uppercase; margin: 0 0 0.7rem;
+    }
+    h2 {
+      color: var(--birch); font-size: 1.45rem; font-weight: 600;
+      letter-spacing: 0.01em; margin: 0 0 1rem; line-height: 1.25;
+    }
+    h2::before { content: "# "; color: var(--orange); }
+    .lead { max-width: 44rem; margin: 0 0 2rem; color: var(--ink); }
+
     /* hero */
-    .hero { text-align: center; padding: 4.5rem 0 3.5rem; }
-    .hero img { max-width: min(40rem, 100%); height: auto; }
+    .hero { text-align: center; padding: 4.75rem 0 3.5rem; position: relative; }
+    .hero::before {
+      content: ""; position: absolute; inset: -10% 0 auto 0; height: 24rem;
+      background: radial-gradient(60% 70% at 50% 30%, rgba(242,145,0,0.12), rgba(242,145,0,0) 70%);
+      pointer-events: none; z-index: -1;
+    }
+    .hero img.lockup { max-width: min(40rem, 100%); height: auto; }
     .hero p.pitch {
-      max-width: 38rem; margin: 1.75rem auto 0;
+      max-width: 40rem; margin: 1.75rem auto 0; font-size: 1.05rem;
       color: var(--ink);
     }
     .hero p.pitch strong { color: var(--birch); font-weight: 600; }
     .hero .get {
-      display: inline-block; position: relative; margin-top: 2rem;
-      text-align: left; max-width: 100%;
+      display: block; position: relative; margin: 2.25rem auto 0;
+      text-align: left; max-width: 38rem;
     }
-    .hero nav { margin-top: 1.5rem; }
-    .hero nav a { margin: 0 0.9rem; }
+    .hero .alt {
+      margin-top: 1rem; font-size: 0.86rem; color: var(--faint); text-align: center;
+    }
+    .hero .alt code { color: var(--ink); }
+    .hero nav { margin-top: 1.75rem; }
+    .hero nav a { margin: 0 0.9rem; display: inline-block; }
     .hero nav a::before { content: "* "; color: var(--orange); }
 
     /* code wells */
@@ -91,6 +127,7 @@
     .prompt { color: var(--mint); user-select: none; }
     .cmd { color: var(--birch); }
     .comment { color: var(--faint); }
+    .flag { color: var(--amber); }
     .cursor {
       display: inline-block; width: 0.55em; height: 1.05em;
       margin-left: 0.15em; vertical-align: text-bottom;
@@ -112,12 +149,7 @@
     button.copy.done { color: var(--mint); border-color: var(--mint); }
 
     /* sections */
-    section { margin: 4.5rem 0; }
-    h2 {
-      color: var(--birch); font-size: 1.15rem; font-weight: 600;
-      letter-spacing: 0.04em; margin: 0 0 1.5rem;
-    }
-    h2::before { content: "# "; color: var(--orange); }
+    section { margin: 5rem 0; scroll-margin-top: 2rem; }
 
     /* feature grid */
     .features {
@@ -129,6 +161,11 @@
       border: 1px solid var(--slate);
       border-radius: 6px;
       padding: 1.1rem 1.25rem;
+      transition: transform 0.18s ease, border-color 0.18s ease;
+    }
+    .features article:hover { transform: translateY(-2px); border-color: var(--faint); }
+    @media (prefers-reduced-motion: reduce) {
+      .features article:hover { transform: none; }
     }
     .features h3 {
       color: var(--birch); font-size: 1rem; font-weight: 600;
@@ -136,10 +173,25 @@
     }
     .features h3::before { content: "* "; color: var(--orange); }
     .features p { margin: 0; font-size: 0.92rem; }
-    .features code {
+    .features code, .prose code {
       background: var(--deep-tar); border-radius: 3px;
       padding: 0.05rem 0.3rem; font-size: 0.88em;
     }
+
+    /* two-column split (text + terminal) */
+    .split {
+      display: grid; gap: 2rem; align-items: start;
+      grid-template-columns: 1fr;
+    }
+    @media (min-width: 52rem) {
+      .split { grid-template-columns: 1.05fr 1.25fr; gap: 2.5rem; }
+      .split.flip > .split-media { order: 2; }
+    }
+    .split-body .lead { margin-bottom: 1.25rem; }
+    .triad { list-style: none; margin: 0; padding: 0; }
+    .triad li { margin: 0.35rem 0; font-size: 0.92rem; }
+    .triad b { color: var(--birch); }
+    .triad .who { color: var(--hot); }
 
     /* terminal mock */
     .term { border: 1px solid var(--slate); border-radius: 8px; overflow: hidden; }
@@ -153,13 +205,41 @@
     }
     .term pre { border: 0; border-radius: 0; padding: 1rem 1.1rem; }
 
+    /* persona crew — full-width band beneath the split */
+    .crew-cap { margin: 2.75rem 0 0; color: var(--ink); font-size: 0.95rem; max-width: 50rem; }
+    .crew-cap b { color: var(--birch); }
+    .crew { list-style: none; margin: 1.25rem 0 0; padding: 0;
+      display: grid; gap: 0.65rem;
+      grid-template-columns: repeat(auto-fit, minmax(13.5rem, 1fr)); }
+    .crew li {
+      display: flex; gap: 0.7rem; align-items: baseline;
+      background: var(--charcoal-2); border: 1px solid var(--slate-soft);
+      border-radius: 5px; padding: 0.6rem 0.85rem; font-size: 0.9rem;
+    }
+    .crew .ico { font-size: 1rem; flex: none; }
+    .crew .nm { color: var(--birch); }
+    .crew .sp { color: var(--faint); }
+    .crew li.lead-persona { border-color: var(--slate); background: var(--charcoal); }
+    .crew li.lead-persona .nm { color: var(--hot); }
+
     /* install list */
     .install dt {
-      color: var(--birch); font-size: 0.92rem; margin: 1.4rem 0 0.5rem;
+      color: var(--birch); font-size: 0.95rem; margin: 1.6rem 0 0.5rem;
     }
     .install dt::before { content: "* "; color: var(--orange); }
     .install dd { margin: 0; }
     .install dd p { margin: 0.5rem 0 0; font-size: 0.88rem; color: var(--faint); }
+    .install dd p code { color: var(--ink); }
+
+    /* docs index */
+    .docs {
+      display: grid; gap: 0.6rem 1.25rem;
+      grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+      list-style: none; margin: 0; padding: 0;
+    }
+    .docs li { border-bottom: 1px solid var(--slate-soft); padding: 0.5rem 0; }
+    .docs a { font-size: 0.95rem; }
+    .docs span { display: block; color: var(--faint); font-size: 0.82rem; }
 
     /* footer */
     footer {
@@ -180,15 +260,20 @@
 <main>
   <header class="hero">
     <h1 class="visually-hidden">Terva — harness the wildcard</h1>
-    <img src="/assets/terva-lockup.svg" alt="Terva — harness the wildcard" width="640" height="239">
+    <img class="lockup" src="/assets/terva-lockup.svg" alt="Terva — harness the wildcard" width="640" height="239">
     <p class="pitch">
-      An <strong>agent harness</strong> — a coding agent out of the box,
-      open to anything you can wire a tool to. One static binary: one
-      hardened core, many front ends, pluggable in any language.
+      An <strong>agent harness</strong> in a single static Go binary — a
+      coding agent out of the box, open to anything you can wire a tool to.
+      One hardened core, many front ends, <strong>guardrails by default</strong>,
+      pluggable in any language.
     </p>
     <div class="get">
-      <pre data-copy="go install terva.sh/terva/cmd/terva@latest"><code><span class="prompt">$ </span><span class="cmd">go install terva.sh/terva/cmd/terva@latest</span><span class="cursor" aria-hidden="true"></span></code></pre>
+      <pre data-copy="curl -fsSL https://terva.sh/install.sh | bash"><code><span class="prompt">$ </span><span class="cmd">curl -fsSL https://terva.sh/install.sh | bash</span><span class="cursor" aria-hidden="true"></span></code></pre>
     </div>
+    <p class="alt">
+      Windows: <code>iwr -useb https://terva.sh/install.ps1 | iex</code> ·
+      or <a href="#install">go install, prebuilt binaries &amp; source</a>
+    </p>
     <nav aria-label="Project links">
       <a href="https://github.com/terva-sh/terva">github</a>
       <a href="https://github.com/terva-sh/terva/releases">releases</a>
@@ -196,8 +281,14 @@
     </nav>
   </header>
 
-  <section aria-labelledby="features-h">
-    <h2 id="features-h">features</h2>
+  <section aria-labelledby="features-h" class="reveal">
+    <p class="eyebrow">what it is</p>
+    <h2 id="features-h">one core, wide open</h2>
+    <p class="lead">
+      One hardened, test-backed core — the agent loop, event wire, permission
+      policy, and two dozen model providers — projected through many front ends
+      and extensible in any language.
+    </p>
     <div class="features">
       <article>
         <h3>One static binary</h3>
@@ -205,20 +296,23 @@
            no daemon — Go all the way down.</p>
       </article>
       <article>
-        <h3>Any provider</h3>
-        <p>Anthropic, OpenAI, Gemini, Bedrock, Copilot, Groq, Ollama, and
-           twenty more built in — plus any OpenAI-compatible endpoint.</p>
+        <h3>25+ providers</h3>
+        <p>Anthropic, OpenAI, Gemini, Bedrock, Copilot, Groq, Cerebras,
+           Mistral, DeepSeek, Ollama, and more built in — plus any
+           OpenAI-compatible endpoint.</p>
+      </article>
+      <article>
+        <h3>Guardrails by default</h3>
+        <p>Approval modes from <code>plan</code> to <code>yolo</code> and typed
+           permission rules. Built-in file tools stay scoped to the working
+           directory and side-effecting foreign tools ask first — guardrails to
+           steer the agent, not a kernel sandbox.</p>
       </article>
       <article>
         <h3>Operate any tool</h3>
         <p>Extensions, MCP servers, and hooks in any language — JSON-RPC over
            subprocess — let terva drive services, hardware, or your own
            systems, not just files.</p>
-      </article>
-      <article>
-        <h3>Chat connectors</h3>
-        <p>A built-in Telegram bridge, and external connectors in any
-           language over a small versioned JSON protocol.</p>
       </article>
       <article>
         <h3>Many front ends</h3>
@@ -235,21 +329,124 @@
     </div>
   </section>
 
-  <section aria-labelledby="usage-h">
+  <section aria-labelledby="personas-h" class="reveal">
+    <p class="eyebrow">who is helping</p>
+    <h2 id="personas-h">personas</h2>
+    <div class="split">
+      <div class="split-body">
+        <p class="lead">
+          A persona is a named identity with a short behavioral <em>charter</em>
+          that focuses the agent on a specialty. Swap the default <b>Mieli</b>
+          for a specialist, write your own, or get them from extensions — and
+          let a coordinator dispatch a whole crew across a problem.
+        </p>
+        <ul class="triad">
+          <li><span class="who">personas</span> — <b>who</b> is helping</li>
+          <li><span class="who">skills</span> — <b>how</b> to do a task</li>
+          <li><span class="who">tools &amp; extensions</span> — <b>what</b> can be done</li>
+        </ul>
+      </div>
+      <div class="split-media">
+        <div class="term">
+          <div class="term-bar">terva persona</div>
+          <pre><code><span class="prompt">$ </span><span class="cmd">terva persona list</span>
+<span class="comment">NAME                    SPECIALTY            SOURCE</span>
+<span class="cmd">Mieli</span>                   coding / coordinator built-in
+<span class="cmd">review-crew:Vartija</span>     security review      built-in
+<span class="cmd">review-crew:Arkkitehti</span>  architecture review  built-in
+<span class="comment">…</span>
+
+<span class="prompt">$ </span><span class="cmd">terva </span><span class="flag">--persona</span><span class="cmd"> vartija "audit the auth flow"</span>
+<span class="prompt">$ </span><span class="cmd">terva </span><span class="flag">--persona</span><span class="cmd"> review-crew:luotain "find the hot path"</span><span class="cursor" aria-hidden="true"></span></code></pre>
+        </div>
+      </div>
+    </div>
+    <p class="crew-cap">terva ships eight specialists out of the box — <b>Mieli</b> for day-to-day work, plus a <b>review crew</b> built to be dispatched across a problem.</p>
+    <ul class="crew" aria-label="Built-in persona crew">
+          <li class="lead-persona"><span class="ico">🧠</span><span><span class="nm">Mieli</span> <span class="sp">— coding collaborator &amp; coordinator</span></span></li>
+          <li><span class="ico">🛡️</span><span><span class="nm">Vartija</span> <span class="sp">— security review</span></span></li>
+          <li><span class="ico">🏗️</span><span><span class="nm">Arkkitehti</span> <span class="sp">— architecture review</span></span></li>
+          <li><span class="ico">🧪</span><span><span class="nm">Koestaja</span> <span class="sp">— test &amp; QA strategy</span></span></li>
+          <li><span class="ico">📈</span><span><span class="nm">Luotain</span> <span class="sp">— performance &amp; profiling</span></span></li>
+          <li><span class="ico">🧭</span><span><span class="nm">Luotsi</span> <span class="sp">— reliability &amp; release-readiness</span></span></li>
+          <li><span class="ico">📝</span><span><span class="nm">Kirjuri</span> <span class="sp">— documentation review</span></span></li>
+          <li><span class="ico">🛠️</span><span><span class="nm">Huoltaja</span> <span class="sp">— maintainability &amp; DX</span></span></li>
+        </ul>
+  </section>
+
+  <section aria-labelledby="extend-h" class="reveal">
+    <p class="eyebrow">open to anything</p>
+    <h2 id="extend-h">extend it, in any language</h2>
+    <p class="lead">
+      The harness talks to the outside world over small, versioned JSON
+      protocols — so you teach terva new capabilities without touching its core,
+      in whatever language you like.
+    </p>
+    <div class="features">
+      <article>
+        <h3>Extensions</h3>
+        <p>Separate executables speaking JSON-RPC over a subprocess. None
+           installed by default; opt in with <code>terva ext install</code>.</p>
+      </article>
+      <article>
+        <h3>MCP servers</h3>
+        <p>Attach Model Context Protocol servers as tool providers —
+           namespaced and permission-gated like everything else.</p>
+      </article>
+      <article>
+        <h3>Hooks</h3>
+        <p>Veto, rewrite, or observe any tool call with your own pre/post
+           tool-use scripts.</p>
+      </article>
+      <article>
+        <h3>Swarm</h3>
+        <p>Fan work out to parallel background subagents from inside a
+           session — each bootable as its own persona.</p>
+      </article>
+      <article>
+        <h3>Skills</h3>
+        <p>Reusable instructions in <code>SKILL.md</code> files, discovered and
+           surfaced to the agent on demand.</p>
+      </article>
+      <article>
+        <h3>Chat connectors</h3>
+        <p>A built-in Telegram bridge, plus external connectors in any language
+           over the same versioned protocol.</p>
+      </article>
+    </div>
+  </section>
+
+  <section aria-labelledby="usage-h" class="reveal">
+    <p class="eyebrow">drive it</p>
     <h2 id="usage-h">usage</h2>
     <div class="term">
       <div class="term-bar">terva</div>
       <pre><code><span class="prompt">$ </span><span class="cmd">terva</span>                              <span class="comment"># interactive tui</span>
 <span class="prompt">$ </span><span class="cmd">terva "fix the failing test"</span>       <span class="comment"># tui, pre-filled prompt</span>
-<span class="prompt">$ </span><span class="cmd">terva -p "list all go files"</span>       <span class="comment"># print final text, exit</span>
-<span class="prompt">$ </span><span class="cmd">terva --json "refactor main.go"</span>    <span class="comment"># newline-delimited json events</span>
-<span class="prompt">$ </span><span class="cmd">terva --continue</span>                   <span class="comment"># resume the last session here</span></code></pre>
+<span class="prompt">$ </span><span class="cmd">terva </span><span class="flag">-p</span><span class="cmd"> "list all go files"</span>       <span class="comment"># print final text, exit</span>
+<span class="prompt">$ </span><span class="cmd">terva </span><span class="flag">--json</span><span class="cmd"> "refactor main.go"</span>    <span class="comment"># newline-delimited json events</span>
+<span class="prompt">$ </span><span class="cmd">terva </span><span class="flag">--persona</span><span class="cmd"> vartija</span>            <span class="comment"># launch as a specialist</span>
+<span class="prompt">$ </span><span class="cmd">terva </span><span class="flag">--continue</span><span class="cmd"></span>                   <span class="comment"># resume the last session here</span>
+<span class="prompt">$ </span><span class="cmd">terva </span><span class="flag">--resume</span><span class="cmd"></span>                     <span class="comment"># pick a session to resume</span></code></pre>
     </div>
   </section>
 
-  <section aria-labelledby="install-h">
+  <section id="install" aria-labelledby="install-h" class="reveal">
+    <p class="eyebrow">get it</p>
     <h2 id="install-h">install</h2>
     <dl class="install">
+      <dt>one-liner — macOS, Linux</dt>
+      <dd>
+        <pre data-copy="curl -fsSL https://terva.sh/install.sh | bash"><code><span class="prompt">$ </span><span class="cmd">curl -fsSL https://terva.sh/install.sh | bash</span></code></pre>
+        <p>Detects OS and architecture, downloads the latest release, verifies
+           its SHA-256, and drops the binary on your <code>$PATH</code>.</p>
+      </dd>
+      <dt>one-liner — Windows, PowerShell</dt>
+      <dd>
+        <pre data-copy="iwr -useb https://terva.sh/install.ps1 | iex"><code><span class="prompt">&gt; </span><span class="cmd">iwr -useb https://terva.sh/install.ps1 | iex</span></code></pre>
+        <p>Drops <code>terva.exe</code> into <code>$HOME\bin</code> and adds it
+           to your user PATH. Open a fresh terminal afterwards.</p>
+      </dd>
       <dt>go install</dt>
       <dd>
         <pre data-copy="go install terva.sh/terva/cmd/terva@latest"><code><span class="prompt">$ </span><span class="cmd">go install terva.sh/terva/cmd/terva@latest</span></code></pre>
@@ -257,9 +454,11 @@
       <dt>prebuilt binaries</dt>
       <dd>
         <p>Every <a href="https://github.com/terva-sh/terva/releases">release</a>
-           ships archives for Linux, macOS, and Windows on amd64 and arm64,
-           plus a <code>checksums.txt</code>. Download, verify,
-           <code>chmod +x</code>, drop on your <code>$PATH</code>.</p>
+           ships archives for Linux, macOS, and Windows on amd64 and arm64, plus
+           a <code>checksums.txt</code>. Each platform comes as
+           <code>terva</code> (full — what the one-liner installs) and
+           <code>terva-min</code> (lean — chat connectors left out); both unpack
+           the same <code>terva</code> command.</p>
       </dd>
       <dt>from source</dt>
       <dd>
@@ -270,7 +469,7 @@ make build"><code><span class="prompt">$ </span><span class="cmd">git clone http
 <span class="prompt">$ </span><span class="cmd">make build</span>        <span class="comment"># produces ./bin/terva</span></code></pre>
       </dd>
     </dl>
-    <p style="margin-top:1.4rem; font-size:0.92rem;">
+    <p style="margin-top:1.5rem; font-size:0.92rem;">
       Then run <code>terva</code> and type <code>/login</code> — the TUI opens
       without credentials and walks you through browser-based auth: an API key
       or a Claude Pro/Max, ChatGPT Plus/Pro, Kimi Code, or GitHub Copilot
@@ -278,10 +477,27 @@ make build"><code><span class="prompt">$ </span><span class="cmd">git clone http
     </p>
   </section>
 
+  <section aria-labelledby="docs-h" class="reveal">
+    <p class="eyebrow">read more</p>
+    <h2 id="docs-h">documentation</h2>
+    <ul class="docs">
+      <li><a href="https://github.com/terva-sh/terva/blob/release/docs/cli.md">cli</a><span>flags, tools, run modes, the data directory</span></li>
+      <li><a href="https://github.com/terva-sh/terva/blob/release/docs/personas.md">personas</a><span>identity, the crew, authoring, swarm dispatch</span></li>
+      <li><a href="https://github.com/terva-sh/terva/blob/release/docs/permissions.md">permissions</a><span>approval modes, rules, and working-directory guards</span></li>
+      <li><a href="https://github.com/terva-sh/terva/blob/release/docs/providers.md">providers</a><span>login flows, endpoints, capability tags</span></li>
+      <li><a href="https://github.com/terva-sh/terva/blob/release/docs/extensions.md">extensions</a><span>installing, managing, the full wire protocol</span></li>
+      <li><a href="https://github.com/terva-sh/terva/blob/release/docs/mcp.md">mcp</a><span>attaching MCP servers as tool providers</span></li>
+      <li><a href="https://github.com/terva-sh/terva/blob/release/docs/hooks.md">hooks</a><span>veto, rewrite, or observe tool calls</span></li>
+      <li><a href="https://github.com/terva-sh/terva/blob/release/docs/skills.md">skills</a><span>SKILL.md reusable instructions</span></li>
+      <li><a href="https://github.com/terva-sh/terva/blob/release/docs/connectors.md">connectors</a><span>the telegram bridge &amp; external connectors</span></li>
+      <li><a href="https://github.com/terva-sh/terva/blob/release/docs/rpc.md">rpc</a><span>embedding terva: the JSON event stream &amp; Go SDK</span></li>
+    </ul>
+  </section>
+
   <footer>
     <span class="rule" aria-hidden="true"></span>
     <p><em>terva</em> is Finnish for pine tar — the traditional preservative
-       and cure-all that sealed boats and kept them seaworthy. Its agent
+       and cure-all that sealed boats and kept them seaworthy. Its default
        persona is <em>Mieli</em> (<em>MYEH-lee</em>), Finnish for
        &ldquo;mind&rdquo;: a mind in a preserved vessel.</p>
     <p>A hard fork of
@@ -298,6 +514,8 @@ make build"><code><span class="prompt">$ </span><span class="cmd">git clone http
   </footer>
 </main>
 <script>
+  document.documentElement.classList.add("js");
+
   for (const pre of document.querySelectorAll("pre[data-copy]")) {
     const btn = document.createElement("button");
     btn.className = "copy";
@@ -310,6 +528,19 @@ make build"><code><span class="prompt">$ </span><span class="cmd">git clone http
       setTimeout(() => { btn.textContent = "copy"; btn.classList.remove("done"); }, 1500);
     });
     pre.appendChild(btn);
+  }
+
+  const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const reveals = document.querySelectorAll(".reveal");
+  if (reduce || !("IntersectionObserver" in window)) {
+    reveals.forEach(el => el.classList.add("in"));
+  } else {
+    const io = new IntersectionObserver((entries, obs) => {
+      for (const e of entries) {
+        if (e.isIntersecting) { e.target.classList.add("in"); obs.unobserve(e.target); }
+      }
+    }, { rootMargin: "0px 0px -10% 0px", threshold: 0.08 });
+    reveals.forEach(el => io.observe(el));
   }
 </script>
 </body>
