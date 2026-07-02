@@ -8,19 +8,19 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Terva — an agent harness</title>
-  <meta name="description" content="Terva is an agent harness in a single static Go binary — a coding agent out of the box, open to anything you can wire a tool to. 25+ model providers, swappable personas, guardrails by default, front ends for terminal, editor, and chat, extensible in any language. Harness the wildcard.">
+  <meta name="description" content="Terva is an agent harness in a single static Go binary — a coding agent out of the box, open to anything you can wire a tool to, from code to chat, character roleplay, and simulated worlds. 25+ model providers, swappable personas and character cards, guardrails by default, front ends for terminal, editor, and chat, extensible in any language. Harness the wildcard.">
   <link rel="canonical" href="https://terva.sh/">
   <meta name="theme-color" content="#11100E">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://terva.sh/">
   <meta property="og:title" content="Terva — an agent harness">
-  <meta property="og:description" content="A coding agent out of the box, open to anything you can wire a tool to. One static binary, 25+ model providers, swappable personas, guardrails by default, extensible in any language. Harness the wildcard.">
+  <meta property="og:description" content="A coding agent out of the box, open to anything you can wire a tool to — code, chat, roleplay, or a simulated world. One static binary, 25+ model providers, swappable personas and character cards, guardrails by default, extensible in any language. Harness the wildcard.">
   <meta property="og:image" content="https://terva.sh/assets/terva-lockup.png">
   <meta property="og:image:width" content="1364">
   <meta property="og:image:height" content="510">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Terva — an agent harness">
-  <meta name="twitter:description" content="A coding agent out of the box, open to anything you can wire a tool to. One static binary, 25+ model providers, swappable personas, extensible in any language. Harness the wildcard.">
+  <meta name="twitter:description" content="A coding agent out of the box, open to anything you can wire a tool to — code, chat, roleplay, or a simulated world. One static binary, 25+ model providers, swappable personas and character cards, extensible in any language. Harness the wildcard.">
   <meta name="twitter:image" content="https://terva.sh/assets/terva-lockup.png">
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <link rel="icon" href="/favicon.ico" sizes="32x32">
@@ -434,16 +434,19 @@
       <div class="split-body">
         <p class="lead">
           terva ships as a coding agent, but the harness underneath is general.
-          Compose the layers — a <b>persona</b> (who), an <b>extension</b> (what),
-          a <b>connector</b> (where) — and point them away from a repo.
+          Compose the layers — a <b>persona</b> or <b>character card</b> (who),
+          an <b>extension</b> (what), a <b>connector</b> (where), and
+          <b>lore</b> that surfaces the right context on cue — and point them
+          away from a repo.
         </p>
       </div>
       <div class="split-media">
         <div class="term">
           <div class="term-bar">terva — beyond code</div>
-          <pre><code><span class="prompt">$ </span><span class="cmd">terva </span><span class="flag">--play --ext</span><span class="cmd"> ./world</span>        <span class="comment"># act in a simulated world</span>
-<span class="prompt">$ </span><span class="cmd">terva </span><span class="flag">--chat --persona</span><span class="cmd"> ./char.md</span>  <span class="comment"># a character to talk with</span>
-<span class="prompt">$ </span><span class="cmd">terva bot run </span><span class="flag">--idle-nudge</span><span class="cmd"> 30m</span>     <span class="comment"># a bot that breaks the silence</span><span class="cursor" aria-hidden="true"></span></code></pre>
+          <pre><code><span class="prompt">$ </span><span class="cmd">terva </span><span class="flag">--card</span><span class="cmd"> ./char.png</span>           <span class="comment"># chat as a character card</span>
+<span class="prompt">$ </span><span class="cmd">terva </span><span class="flag">--play --ext</span><span class="cmd"> ./world</span>        <span class="comment"># act in a simulated world</span>
+<span class="prompt">$ </span><span class="cmd">terva </span><span class="flag">--play --cast</span><span class="cmd"> gm=./gm.png</span>   <span class="comment"># a director voices a cast</span>
+<span class="prompt">$ </span><span class="cmd">terva bot run </span><span class="flag">--idle-nudge</span><span class="cmd"> 30m</span>    <span class="comment"># a bot that breaks the silence</span><span class="cursor" aria-hidden="true"></span></code></pre>
         </div>
       </div>
     </div>
@@ -461,9 +464,12 @@
       <li><span class="who">a connector</span> — <b>play</b> it from a chat thread</li>
     </ul>
     <p class="beyond-cap">
-      The repo ships a worked example — <code>examples/extensions/world</code>, a
+      The repo ships worked examples — <code>examples/extensions/world</code>, a
       procedural place an explorer travels through tools (look, travel, gather)
-      with persisted state and a map — and the
+      with persisted state and a map, and <code>examples/cards</code>, a
+      SillyTavern character card you can chat as. A <b>--play</b> director can
+      even voice a declared <b>cast</b> of actors, while <b>lore</b> surfaces
+      authored context the moment it's relevant. The
       <a href="https://github.com/terva-sh/terva/blob/release/docs/personas.md">persona</a>
       and <a href="https://github.com/terva-sh/terva/blob/release/docs/extensions.md">extension</a>
       docs show how to give an agent a world of your own.
