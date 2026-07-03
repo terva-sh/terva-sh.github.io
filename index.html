@@ -727,7 +727,7 @@ make build"><code><span class="prompt">$ </span><span class="cmd">git clone http
       {
         launch: 'terva',
         mode: 'code',
-        status: { model: '(anthropic) opus-4.8', tokens: '↑2.1k ↓480', cost: '$0.03' },
+        status: { tokens: '↑2.1k ↓480', cost: '$0.03' },
         steps: [
           { user: 'what does `make build` produce?' },
           { think: 700, msg: 'reading the Makefile' },
@@ -739,7 +739,7 @@ make build"><code><span class="prompt">$ </span><span class="cmd">git clone http
         launch: 'terva --chat',
         mode: 'chat',
         persona: { emoji: '🧠', name: 'Mieli' },
-        status: { model: '(anthropic) opus-4.8', tokens: '↑1.4k ↓620' },
+        status: { tokens: '↑1.4k ↓620' },
         steps: [
           { user: 'hype me up, i have to refactor a 4000-line file' },
           { think: 750, msg: 'letting it settle' },
@@ -753,7 +753,7 @@ make build"><code><span class="prompt">$ </span><span class="cmd">git clone http
         launch: 'terva --play --ext ./ios-emulator',
         mode: 'play',
         persona: { emoji: '🧪', name: 'Koestaja' },
-        status: { model: '(anthropic) opus-4.8', tokens: '↑3.2k ↓1.1k' },
+        status: { tokens: '↑3.2k ↓1.1k' },
         steps: [
           { user: 'run the smoke-test suite' },
           { think: 1000, msg: 'booting the simulator' },
@@ -767,7 +767,7 @@ make build"><code><span class="prompt">$ </span><span class="cmd">git clone http
       {
         launch: 'terva "review the auth changes before I merge"',
         mode: 'code',
-        status: { model: '(anthropic) opus-4.8', tokens: '↑4.0k ↓2.2k', swarm: '⛭ 3 agents' },
+        status: { tokens: '↑4.0k ↓2.2k', swarm: '⛭ 3 agents' },
         steps: [
           { user: 'review the auth changes before I merge' },
           { think: 800, msg: 'dispatching the crew' },
@@ -782,6 +782,9 @@ make build"><code><span class="prompt">$ </span><span class="cmd">git clone http
     const CPS_USER = 32, CPS_OUT = 15, SPIN_MS = 90;
     const SPIN_FRAMES = ['⠋','⠙','⠚','⠞','⠖','⠦','⠴','⠲','⠳','⠓'];
     const SPIN_MSGS = { code: 'thinking', chat: 'reflecting', play: 'considering' };
+    // model rotates across providers so the demo never reads as single-provider.
+    // Code-mode clips show it in the status bar; immersive clips show the persona.
+    const MODELS = ['(anthropic) opus-4.8', '(openai) gpt-5.5', '(google) gemini-3-pro', '(deepseek) v4-pro', '(z.ai) glm-5.2'];
 
     const screen = document.getElementById('dt-screen');
     if (!screen) return;
@@ -806,7 +809,7 @@ make build"><code><span class="prompt">$ </span><span class="cmd">git clone http
     };
     const el = (cls, html) => { const d = document.createElement('div'); if (cls) d.className = cls; if (html != null) d.innerHTML = html; return d; };
 
-    let busy = null;
+    let busy = null, activeModel = '';
     function renderStatus(statusEl, clip) {
       const atoms = [];
       if (busy) {
@@ -815,7 +818,7 @@ make build"><code><span class="prompt">$ </span><span class="cmd">git clone http
         atoms.push('<span class="spin">' + frame + ' ' + busy.msg + '</span>' + (secs > 0 ? ' <span class="sep">- ' + secs + 's</span>' : ''));
       }
       if (clip.persona && clip.mode !== 'code') atoms.push('<span class="persona">' + clip.persona.emoji + ' ' + clip.persona.name + '</span>');
-      else atoms.push(clip.status.model);
+      else atoms.push(activeModel);
       if (clip.status.tokens) atoms.push(clip.status.tokens);
       if (clip.status.swarm) atoms.push(clip.status.swarm);
       if (clip.status.cost && clip.mode === 'code') atoms.push(clip.status.cost);
@@ -825,6 +828,7 @@ make build"><code><span class="prompt">$ </span><span class="cmd">git clone http
     async function play(clip, instant) {
       const my = ++tok;
       busy = null;
+      activeModel = clip.status.model || MODELS[Math.floor(Math.random() * MODELS.length)];
       launchEl.textContent = clip.launch;
       screen.innerHTML = '';
       const transcript = el('dt-transcript'), band = el('dt-band'), statusEl = el('dt-status'), promptEl = el('dt-prompt');
