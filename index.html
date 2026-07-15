@@ -470,9 +470,10 @@
         <h3>Terminal <em>and</em> browser</h3>
         <p>Two first-class front ends: the TUI, and <code>terva web</code> — a
            browser control panel, not a viewer. Same sessions, same permissions,
-           same event stream. Plus your editor (over ACP), chat,
-           <code>-p</code> print, <code>--json</code>, and a JSON-RPC server to
-           embed it.</p>
+           same event stream; the TUI can even attach to a running
+           <code>terva web</code> as a client, so a terminal outlives its
+           connection. Plus your editor (over ACP), chat, <code>-p</code> print,
+           <code>--json</code>, and a JSON-RPC server to embed it.</p>
       </article>
       <article>
         <h3>Consolidated &amp; tested</h3>
@@ -677,6 +678,7 @@
       <pre><code><span class="prompt">$ </span><span class="cmd">terva</span>                              <span class="comment"># interactive tui</span>
 <span class="prompt">$ </span><span class="cmd">terva "fix the failing test"</span>       <span class="comment"># tui, pre-filled prompt</span>
 <span class="prompt">$ </span><span class="cmd">terva web</span>                          <span class="comment"># browser control panel</span>
+<span class="prompt">$ </span><span class="cmd">terva attach</span>                       <span class="comment"># reattach to a running daemon</span>
 <span class="prompt">$ </span><span class="cmd">terva </span><span class="flag">-p</span><span class="cmd"> "list all go files"</span>       <span class="comment"># print final text, exit</span>
 <span class="prompt">$ </span><span class="cmd">terva </span><span class="flag">--json</span><span class="cmd"> "refactor main.go"</span>    <span class="comment"># newline-delimited json events</span>
 <span class="prompt">$ </span><span class="cmd">terva </span><span class="flag">--persona</span><span class="cmd"> vartija</span>            <span class="comment"># launch as a specialist</span>
