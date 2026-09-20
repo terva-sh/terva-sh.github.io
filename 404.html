@@ -3,7 +3,7 @@
   Catch-all for the terva.sh vanity import (see terva/index.html for
   the primary page). `go get terva.sh/terva/packages/...` fetches the
   FULL package path with ?go-get=1; on a static host those deep paths
-  404, and the go tool parses go-import meta out of the 404 body —
+  404, and the go tool parses go-import meta out of the 404 body,
   the standard GitHub Pages vanity-domain pattern. Verify with a real
   `go get` once DNS + Pages are live.
 
@@ -16,7 +16,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="go-import" content="terva.sh/terva git https://github.com/terva-sh/terva">
   <meta name="go-source" content="terva.sh/terva https://github.com/terva-sh/terva https://github.com/terva-sh/terva/tree/release{/dir} https://github.com/terva-sh/terva/blob/release{/dir}/{file}#L{line}">
-  <title>404 — terva.sh</title>
+  <title>404, terva.sh</title>
   <meta name="robots" content="noindex">
   <meta name="theme-color" content="#11100E">
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
@@ -45,7 +45,7 @@
 <body>
   <main>
     <img src="/assets/terva-logo-transparent.svg" alt="">
-    <h1><span>*</span> 404 — not found</h1>
+    <h1><span>*</span> 404, not found</h1>
     <p>Nothing lives at this path.</p>
     <p><a href="/">terva.sh</a> · <a href="https://github.com/terva-sh/terva">github.com/terva-sh/terva</a></p>
     <p class="faint">If you came here via <code>go get</code>, the go-import

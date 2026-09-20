@@ -2,47 +2,48 @@
 <!-- Landing page for terva.sh. The load-bearing files are
      terva/index.html and 404.html (the go-import vanity pages); keep
      them intact in any redesign. Source of truth for this site is
-     docs/vanity/site/ in the terva repo — sync changes back there. -->
+     docs/vanity/site/ in the terva repo; sync changes back there. -->
 <html lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Terva — an agent harness</title>
-  <meta name="description" content="Terva is an agent harness in a single static Go binary — a coding agent out of the box, open to anything you can wire a tool to, from code to chat, character roleplay, and simulated worlds. 25+ model providers, swappable personas and character cards, guardrails by default, first-class terminal and browser front ends plus editor and chat, extensible in any language. Harness the wildcard.">
+  <title>Terva: an agent harness</title>
+  <meta name="description" content="Terva is an agent harness in a single static Go binary. It is a coding agent out of the box, open to anything you can wire a tool to, from code to chat, character roleplay, and simulated worlds. 25+ model providers, swappable personas and character cards, guardrails by default, first-class terminal and browser front ends plus editor and chat, extensible in any language. Harness the wildcard.">
   <link rel="canonical" href="https://terva.sh/">
   <meta name="theme-color" content="#11100E">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://terva.sh/">
-  <meta property="og:title" content="Terva — an agent harness">
-  <meta property="og:description" content="A coding agent out of the box, open to anything you can wire a tool to — code, chat, roleplay, or a simulated world. One static binary, 25+ model providers, swappable personas and character cards, guardrails by default, extensible in any language. Harness the wildcard.">
+  <meta property="og:title" content="Terva: an agent harness">
+  <meta property="og:description" content="A coding agent out of the box, open to anything you can wire a tool to: code, chat, roleplay, or a simulated world. One static binary, 25+ model providers, swappable personas and character cards, guardrails by default, extensible in any language. Harness the wildcard.">
   <meta property="og:image" content="https://terva.sh/assets/terva-lockup.png">
   <meta property="og:image:width" content="1364">
   <meta property="og:image:height" content="510">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Terva — an agent harness">
-  <meta name="twitter:description" content="A coding agent out of the box, open to anything you can wire a tool to — code, chat, roleplay, or a simulated world. One static binary, 25+ model providers, swappable personas and character cards, extensible in any language. Harness the wildcard.">
+  <meta name="twitter:title" content="Terva: an agent harness">
+  <meta name="twitter:description" content="A coding agent out of the box, open to anything you can wire a tool to: code, chat, roleplay, or a simulated world. One static binary, 25+ model providers, swappable personas and character cards, extensible in any language. Harness the wildcard.">
   <meta name="twitter:image" content="https://terva.sh/assets/terva-lockup.png">
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <link rel="icon" href="/favicon.ico" sizes="32x32">
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   <link rel="manifest" href="/site.webmanifest">
+  <link rel="stylesheet" href="/assets/asciinema-player.css">
   <style>
     :root {
-      --tar: #11100E;          /* Tar Black — page ground, matches the lockup rect */
-      --deep-tar: #0A0A09;     /* Deep Tar — terminal + code wells */
-      --charcoal: #1B1D1E;     /* Charcoal — cards */
+      --tar: #11100E;          /* Tar Black, page ground, matches the lockup rect */
+      --deep-tar: #0A0A09;     /* Deep Tar, terminal + code wells */
+      --charcoal: #1B1D1E;     /* Charcoal, cards */
       --charcoal-2: #16191A;   /* slightly deeper card for alt sections */
-      --slate: #2E343B;        /* Slate — borders */
+      --slate: #2E343B;        /* Slate, borders */
       --slate-soft: #23272c;   /* softer hairline */
-      --birch: #F5F1E8;        /* Birch White — headings */
-      --ink: #C7C1B2;          /* dimmed birch — body text */
-      --faint: #7A7979;        /* lockup gray — comments, fine print */
-      --amber: #D9902F;        /* Resin Amber — links */
-      --hot: #F2B84B;          /* Hot Amber — hover */
-      --orange: #F29100;       /* Deep Resin Orange — wildcard accents */
-      --cursor: #FDB515;       /* Footer Amber — cursor dash */
-      --mint: #6EE7B7;         /* Terminal Mint — prompts */
-      /* terva TUI palette (packages/tui/theme.go, xterm-256 → hex) — demo terminal */
+      --birch: #F5F1E8;        /* Birch White, headings */
+      --ink: #C7C1B2;          /* dimmed birch, body text */
+      --faint: #7A7979;        /* lockup gray, comments and fine print */
+      --amber: #D9902F;        /* Resin Amber, links */
+      --hot: #F2B84B;          /* Hot Amber, hover */
+      --orange: #F29100;       /* Deep Resin Orange, wildcard accents */
+      --cursor: #FDB515;       /* Footer Amber, cursor dash */
+      --mint: #6EE7B7;         /* Terminal Mint, prompts */
+      /* terva TUI palette (packages/tui/theme.go, xterm-256 → hex) for the demo terminal */
       --tv-fg: #dadada; --tv-muted: #808080; --tv-accent: #87afff;
       --tv-assistant: #87d7ff; --tv-tool: #87d787; --tv-error: #ff5f5f;
       --tv-bubble-bg: #42454b; --tv-bubble-fg: #a8a8a8;
@@ -69,7 +70,7 @@
       clip-path: inset(50%); overflow: hidden; white-space: nowrap;
     }
 
-    /* progressive scroll reveal — content is visible without JS */
+    /* progressive scroll reveal; content is visible without JS */
     html.js .reveal {
       opacity: 0; transform: translateY(10px);
       transition: opacity 0.5s ease, transform 0.5s ease;
@@ -192,7 +193,7 @@
       grid-template-columns: minmax(0, 1fr);
     }
     /* grid/flex children default to min-width:auto and refuse to shrink below
-       their content's intrinsic width — that lets the terminal mock stretch the
+       their content's intrinsic width, which lets the terminal mock stretch the
        whole column past the viewport on phones. Pin a zero minimum so the
        terminal's own overflow-x:auto scrolls internally instead. */
     .split-body, .split-media, .term { min-width: 0; }
@@ -229,10 +230,11 @@
     }
     .term pre { border: 0; border-radius: 0; padding: 1rem 1.1rem; }
 
-    /* demo terminal — an autoplaying, cyclable terva TUI session under the
-       pitch. Full chrome derived from packages/tui/theme.go. Desktop only;
-       plays once on scroll-into-view then rests. See docs/vanity/LAYOUT.md. */
-    .demo { margin: 2rem auto 0; max-width: 40rem; text-align: left; }
+    /* demo terminal: a recording of the real TUI, played by the vendored
+       asciinema player over assets/terminal-demo.cast. Recorded at 100 by 30
+       by `just demo-record`; the mount is sized to that so the hero never
+       reflows. Desktop only; plays on scroll-into-view. See docs/vanity/LAYOUT.md. */
+    .demo { margin: 2rem auto 0; max-width: 56rem; text-align: left; }
     .dt {
       border: 1px solid var(--slate); border-radius: 8px; overflow: hidden;
       background: var(--deep-tar); box-shadow: 0 18px 50px -28px rgba(0,0,0,0.9);
@@ -246,64 +248,29 @@
     .dt-bar .launch { color: var(--ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; }
     .dt-bar .grow { flex: 1 1 auto; min-width: 0.4rem; }
     .dt-bar .idx { flex: none; color: var(--faint); font-size: 0.72rem; }
-    .dt-ctrl {
-      flex: none; background: transparent; border: 1px solid var(--slate); border-radius: 4px;
-      color: var(--faint); font: inherit; font-size: 0.72rem; padding: 0.06rem 0.5rem; cursor: pointer;
+    /* 100 columns by 30 rows at the player's line height: reserve the box
+       before the script runs so the install line below does not jump. */
+    .dt-screen { min-height: 22rem; }
+    .dt-screen .ap-wrapper { background: var(--deep-tar); }
+    .dt-fallback { margin: 0; padding: 1rem 1.1rem; color: var(--faint); font-size: 0.85rem; }
+    .demo-cap { margin: 0.9rem 0 0; font-size: 0.86rem; color: var(--faint); text-align: center; }
+    /* the player's colours, mapped onto the TUI palette above */
+    .asciinema-player-theme-terva {
+      --term-color-foreground: var(--tv-fg); --term-color-background: var(--deep-tar);
+      --term-color-0: #0A0A09; --term-color-1: #ff5f5f; --term-color-2: #87d787; --term-color-3: #d7af5f;
+      --term-color-4: #87afff; --term-color-5: #d787d7; --term-color-6: #87d7ff; --term-color-7: #dadada;
+      --term-color-8: #808080; --term-color-9: #ff8787; --term-color-10: #afd7af; --term-color-11: #ffd75f;
+      --term-color-12: #afd7ff; --term-color-13: #ffafff; --term-color-14: #afffff; --term-color-15: #ffffff;
     }
-    .dt-ctrl:hover { color: var(--birch); border-color: var(--faint); }
-    /* the controls only do anything with JS — hide them in the no-JS fallback */
-    html:not(.js) .dt-ctrl { display: none; }
-    .dt-screen {
-      display: flex; flex-direction: column;
-      height: 14rem; padding: 0.8rem 0.95rem 0.9rem; overflow: hidden;
-      font-size: 0.8rem; line-height: 1.5;
-    }
-    /* transcript scrolls (JS tail-follows); the status+prompt band is a
-       sticky bottom row, like terva's real TUI. */
-    .dt-transcript { flex: 1 1 auto; min-height: 0; overflow: hidden; }
-    .dt-user {
-      background: var(--tv-bubble-bg); color: var(--tv-bubble-fg); padding: 0.16rem 0.55rem;
-      margin: 0.5rem 0; display: flex; gap: 0.5rem; border-radius: 2px;
-    }
-    .dt-user .bar { color: var(--tv-accent); flex: none; }
-    .dt-user .em { color: var(--tv-accent); }
-    .dt-assistant { color: var(--tv-fg); margin: 0.5rem 0; padding-left: 1rem; }
-    .dt-assistant b { color: #fff; font-weight: 600; }
-    .dt-assistant .em { color: var(--tv-accent); }
-    .dt-tool { position: relative; border: 1px solid var(--tv-muted); margin: 0.8rem 0 0.55rem; padding: 0.5rem 0.7rem 0.4rem; }
-    .dt-tool .hd {
-      position: absolute; top: -0.66em; left: 0.6rem; max-width: calc(100% - 1.4rem);
-      background: var(--deep-tar); padding: 0 0.45rem; font-size: 0.78rem; color: var(--tv-muted);
-      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-    }
-    .dt-tool .hd .nm { color: var(--tv-fg); }
-    .dt-tool .hd .mark { color: var(--tv-tool); margin-right: 0.15rem; }
-    .dt-tool.err { border-color: var(--tv-error); }
-    .dt-tool.err .hd .mark { color: var(--tv-error); }
-    .dt-tool .body { color: var(--tv-muted); white-space: pre-wrap; word-break: break-word; }
-    .dt-tool .body .run { color: var(--tv-assistant); }
-    .dt-band { flex: none; margin-top: 0.7rem; }
-    .dt-status { color: var(--tv-muted); font-size: 0.74rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    .dt-status .spin { color: var(--tv-assistant); }
-    .dt-status .sep { color: var(--tv-muted); opacity: 0.8; }
-    .dt-status .persona { color: var(--tv-accent); }
-    .dt-prompt { color: var(--tv-fg); margin-top: 0.2rem; min-height: 1.5em; word-break: break-word; }
-    .dt-prompt .bar { color: var(--tv-accent); }
-    .dt-cursor {
-      display: inline-block; width: 0.5em; height: 1.02em; margin-left: 0.05em;
-      background: var(--cursor); vertical-align: text-bottom;
-      animation: blink 1.1s steps(1) infinite;
-    }
-    @media (prefers-reduced-motion: reduce) { .dt-cursor { animation: none; } }
 
-    /* desktop only — hidden on mobile/tablet (power + small screen) */
+    /* desktop only: a hundred columns do not fit a phone */
     @media (max-width: 52rem) { .demo { display: none; } }
 
-    /* web-panel shots — REAL captures of `terva web` (recipe in docs/vanity/LAYOUT.md).
+    /* web-panel shots: REAL captures of `terva web` (recipe in docs/vanity/LAYOUT.md).
        Mobile-first: one column, the phone shot capped so it doesn't tower over the
        page. Wide: the phone sits beside the desktop shot, baseline-aligned. */
     .shots { display: grid; grid-template-columns: minmax(0, 1fr); gap: 1.75rem; }
-    .shots figure { margin: 0; min-width: 0; } /* min-width:0 — grid children that hold images */
+    .shots figure { margin: 0; min-width: 0; } /* min-width:0, for grid children that hold images */
     .shots img {
       display: block; width: 100%; max-width: 100%; height: auto;
       border: 1px solid var(--slate); border-radius: 8px;
@@ -322,7 +289,7 @@
     }
     .alt-note { margin-top: 1.5rem; font-size: 0.86rem; color: var(--faint); }
 
-    /* persona crew — full-width band beneath the split */
+    /* persona crew: a full-width band beneath the split */
     .crew-cap { margin: 2.75rem 0 0; color: var(--ink); font-size: 0.95rem; max-width: 50rem; }
     .crew-cap b { color: var(--birch); }
     .crew { list-style: none; margin: 1.25rem 0 0; padding: 0;
@@ -372,7 +339,7 @@
     footer p { max-width: 44rem; margin: 0.6rem auto; }
     footer em { color: var(--ink); font-style: italic; }
 
-    /* phone polish — tighter gutters and spacing, and a smaller terminal
+    /* phone polish: tighter gutters and spacing, and a smaller terminal
        font so the mocks fit more per line and need less internal scrolling.
        Guarded by max-width so the desktop layout is untouched. */
     @media (max-width: 34rem) {
@@ -388,36 +355,27 @@
 <body>
 <main>
   <header class="hero">
-    <h1 class="visually-hidden">Terva — harness the wildcard</h1>
-    <img class="lockup" src="/assets/terva-lockup.svg" alt="Terva — harness the wildcard" width="640" height="239">
+    <h1 class="visually-hidden">Terva: harness the wildcard</h1>
+    <img class="lockup" src="/assets/terva-lockup.svg" alt="Terva: harness the wildcard" width="640" height="239">
     <p class="pitch">
-      An <strong>agent harness</strong> in a single static Go binary — a
-      coding agent out of the box, open to anything you can wire a tool to.
+      An <strong>agent harness</strong> in a single static Go binary, and a
+      coding agent out of the box that is open to anything you can wire a tool to.
       One hardened core, many front ends, <strong>guardrails by default</strong>,
       pluggable in any language.
     </p>
-    <div class="demo">
-      <div class="dt" aria-label="Example terva session">
+    <div class="demo" id="demo">
+      <div class="dt" aria-label="A recorded terva session">
         <div class="dt-bar">
           <span class="dots" aria-hidden="true">● ● ●</span>
-          <span class="launch" id="dt-launch">terva</span>
+          <span class="launch">terva</span>
           <span class="grow"></span>
-          <span class="idx" id="dt-idx" aria-hidden="true"></span>
-          <button class="dt-ctrl" id="dt-replay" type="button" title="Replay this example">↻ replay</button>
-          <button class="dt-ctrl" id="dt-next" type="button" title="Next example">› next</button>
+          <span class="idx">a recording, replayed from a session transcript</span>
         </div>
-        <div class="dt-screen" id="dt-screen">
-          <!-- no-JS / first-paint fallback: a finished session in real, selectable text -->
-          <div class="dt-transcript">
-            <div class="dt-user"><span class="bar" aria-hidden="true">▌</span><span>what does <span class="em">make build</span> produce?</span></div>
-            <div class="dt-assistant">A single static binary at <b>./bin/terva</b> — no codegen, no runtime. Go all the way down.</div>
-          </div>
-          <div class="dt-band">
-            <div class="dt-status">(anthropic) opus-4.8 <span class="sep">·</span> ↑2.1k ↓480 <span class="sep">·</span> $0.03</div>
-            <div class="dt-prompt"><span class="bar" aria-hidden="true">▌ </span><span class="dt-cursor" aria-hidden="true"></span></div>
-          </div>
+        <div class="dt-screen" id="dt-screen" data-src="/assets/terminal-demo.cast">
+          <noscript><p class="dt-fallback">The recording needs JavaScript. The same scene is an animation in the <a href="https://github.com/terva-sh/terva#readme">README</a>.</p></noscript>
         </div>
       </div>
+      <p class="demo-cap">A token compare fixed in constant time. The agent reads, asks before it edits, asks before it runs the tests, then asks whether to commit.</p>
     </div>
     <div class="get">
       <pre data-copy="curl -fsSL https://terva.sh/install.sh | bash"><code><span class="prompt">$ </span><span class="cmd">curl -fsSL https://terva.sh/install.sh | bash</span><span class="cursor" aria-hidden="true"></span></code></pre>
@@ -437,39 +395,39 @@
     <p class="eyebrow">what it is</p>
     <h2 id="features-h">one core, wide open</h2>
     <p class="lead">
-      One hardened, test-backed core — the agent loop, event wire, permission
-      policy, and two dozen model providers — projected through many front ends
-      and extensible in any language.
+      One hardened, test-backed core holds the agent loop, the event wire, the
+      permission policy, and <span data-fact="provider-count">25+ model providers</span>. That core is projected through
+      many front ends, and it is extensible in any language.
     </p>
     <div class="features">
       <article>
         <h3>One static binary</h3>
         <p>Download one file and run it. No runtime, no package manager,
-           no daemon — Go all the way down.</p>
+           no daemon. Go all the way down.</p>
       </article>
       <article>
         <h3>25+ providers</h3>
         <p>Anthropic, OpenAI, Gemini, Bedrock, Copilot, Groq, Cerebras,
-           Mistral, DeepSeek, Ollama, and more built in — plus any
-           OpenAI-compatible endpoint.</p>
+           Mistral, DeepSeek, Ollama, and more built in, plus any
+           OpenAI-compatible or Anthropic-compatible endpoint.</p>
       </article>
       <article>
         <h3>Guardrails by default</h3>
         <p>Approval modes from <code>plan</code> to <code>yolo</code> and typed
            permission rules. Built-in file tools stay scoped to the working
-           directory and side-effecting foreign tools ask first — guardrails to
-           steer the agent, not a kernel sandbox.</p>
+           directory and side-effecting foreign tools ask first. These are
+           guardrails that steer the agent, not a kernel sandbox.</p>
       </article>
       <article>
         <h3>Operate any tool</h3>
-        <p>Extensions, MCP servers, and hooks in any language — JSON-RPC over
-           subprocess — let terva drive services, hardware, or your own
-           systems, not just files.</p>
+        <p>Extensions, MCP servers, and hooks in any language, all speaking
+           JSON-RPC over a subprocess, let terva drive services, hardware, or
+           your own systems, and not only files.</p>
       </article>
       <article>
         <h3>Terminal <em>and</em> browser</h3>
-        <p>Two first-class front ends: the TUI, and <code>terva web</code> — a
-           browser control panel, not a viewer. Same sessions, same permissions,
+        <p>Two first-class front ends: the TUI, and <code>terva web</code>, a
+           browser control panel rather than a viewer. Same sessions, same permissions,
            same event stream; the TUI can even attach to a running
            <code>terva web</code> as a client, so a terminal outlives its
            connection. Plus your editor (over ACP), chat, <code>-p</code> print,
@@ -477,9 +435,9 @@
       </article>
       <article>
         <h3>Consolidated &amp; tested</h3>
-        <p>One loop, one event wire, one policy — typed contracts, not
-           parallel reimplementations — with golden and end-to-end harnesses
-           backing every change.</p>
+        <p>One loop, one event wire, one policy, held as typed contracts
+           rather than parallel reimplementations, with golden and end-to-end
+           harnesses backing every change.</p>
       </article>
     </div>
   </section>
@@ -488,24 +446,24 @@
     <p class="eyebrow">the other front end</p>
     <h2 id="web-h">drive it from a browser</h2>
     <p class="lead">
-      <code>terva web</code> projects the same core over the wire — same sessions,
+      <code>terva web</code> projects the same core over the wire: same sessions,
       same permissions, same event stream. It's a control panel, not a viewer: you
       drive the agent, approve its tool calls, and change its settings from it. The
       terminal is still home; this is for when the agent isn't running where you're
-      sitting — an always-on bot, a long job on a server, an approval that lands
+      sitting, such as an always-on bot, a long job on a server, or an approval that lands
       while you're on your phone.
     </p>
     <div class="shots">
       <figure class="shot-wide">
         <!-- squeezed to a phone width this is an illegible smudge, so below the
              breakpoint it keeps a readable size and scrolls INSIDE its own box
-             (never widening the page — LAYOUT.md, "the prime directive"). -->
+             (never widening the page; see LAYOUT.md, "the prime directive"). -->
         <div class="scroller">
           <img src="/assets/terva-web-desktop.webp" width="1700" height="1062"
                loading="lazy" decoding="async"
-               alt="The terva web panel on a desktop. An agent session audits a token check: it greps for verifyToken, reads auth.go, edits the == comparison to hmac.Equal — rendered as a diff — then runs go test and reports it green. A pane docked on the right shows the context breakdown: system prompt, tool defs, transcript, total.">
+               alt="The terva web panel on a desktop. An agent session audits a token check: it greps for verifyToken, reads auth.go, edits the == comparison to hmac.Equal, rendered as a diff, then runs go test and reports it green. A pane docked on the right shows the context breakdown: system prompt, tool defs, transcript, total.">
         </div>
-        <figcaption>Tool calls carry their diffs and output. The docked pane is the control surface — usage, settings, RAATI, permissions, chat.</figcaption>
+        <figcaption>Tool calls carry their diffs and output. The docked pane is the control surface: usage, settings, RAATI, permissions, chat.</figcaption>
       </figure>
       <figure class="shot-phone">
         <img src="/assets/terva-web-mobile.webp" width="693" height="1500"
@@ -515,9 +473,30 @@
       </figure>
     </div>
     <p class="alt-note">
-      Loopback by default; it refuses a public bind without an auth mode. Token,
-      forward-auth proxy, or a scoped tailnet range — see
+      Loopback by default; it refuses a public bind without an auth mode. Pick a
+      token, a forward-auth proxy, a scoped tailnet range, or single sign-on
+      through an OpenID Connect provider, which shipped in v0.137.0 and is
+      configured with a <code>web_oidc</code> block. See
       <a href="https://github.com/terva-sh/terva/blob/release/docs/web.md">the web docs</a>.
+    </p>
+    <p class="alt-note">
+      <code>terva serve</code> puts a supervisor in front of many daemons, so one
+      host can give every person who signs in their own terva: a separate process
+      with its own <code>TERVA_HOME</code>, its own sessions, its own MCP
+      servers, and its own extensions. It refuses to start without single sign-on
+      or a forward-auth proxy, because a shared token would resolve everyone to
+      the same environment. A per-tenant home is a routing decision rather than a
+      security boundary, so letting a second person in wants
+      <code>--containment systemd</code>, which runs each tenant under a
+      transient uid from a unit template. See
+      <a href="https://github.com/terva-sh/terva/blob/release/docs/serve.md">the serve docs</a>.
+    </p>
+    <p class="alt-note">
+      A <b>fleet</b> is one browser panel reading the sessions of terva daemons
+      running on other machines. Members dial the hub and the hub never dials a
+      member, so a laptop behind NAT can join without an inbound port, a public
+      address, or a certificate. See
+      <a href="https://github.com/terva-sh/terva/blob/release/docs/fleet.md">the fleet docs</a>.
     </p>
   </section>
 
@@ -529,13 +508,13 @@
         <p class="lead">
           A persona is a named identity with a short behavioral <em>charter</em>
           that focuses the agent on a specialty. Swap the default <b>Mieli</b>
-          for a specialist, write your own, or get them from extensions — and
+          for a specialist, write your own, or get them from extensions, and
           let a coordinator dispatch a whole crew across a problem.
         </p>
         <ul class="triad">
-          <li><span class="who">personas</span> — <b>who</b> is helping</li>
-          <li><span class="who">skills</span> — <b>how</b> to do a task</li>
-          <li><span class="who">tools &amp; extensions</span> — <b>what</b> can be done</li>
+          <li><span class="who">personas,</span> <b>who</b> is helping</li>
+          <li><span class="who">skills,</span> <b>how</b> to do a task</li>
+          <li><span class="who">tools &amp; extensions,</span> <b>what</b> can be done</li>
         </ul>
       </div>
       <div class="split-media">
@@ -553,16 +532,16 @@
         </div>
       </div>
     </div>
-    <p class="crew-cap">terva ships twelve personas out of the box — <b>Mieli</b> for day-to-day work and the <b>review crew</b> below, built to be dispatched across a problem, plus RAATI's three deliberation seats and <b>Kertoja</b>, the narrator for immersive play.</p>
-    <ul class="crew" aria-label="Built-in persona crew">
-          <li class="lead-persona"><span class="ico">🧠</span><span><span class="nm">Mieli</span> <span class="sp">— coding collaborator &amp; coordinator</span></span></li>
-          <li><span class="ico">🛡️</span><span><span class="nm">Vartija</span> <span class="sp">— security review</span></span></li>
-          <li><span class="ico">🏗️</span><span><span class="nm">Arkkitehti</span> <span class="sp">— architecture review</span></span></li>
-          <li><span class="ico">🧪</span><span><span class="nm">Koestaja</span> <span class="sp">— test &amp; QA strategy</span></span></li>
-          <li><span class="ico">📈</span><span><span class="nm">Luotain</span> <span class="sp">— performance &amp; profiling</span></span></li>
-          <li><span class="ico">🧭</span><span><span class="nm">Luotsi</span> <span class="sp">— reliability &amp; release-readiness</span></span></li>
-          <li><span class="ico">📝</span><span><span class="nm">Kirjuri</span> <span class="sp">— documentation review</span></span></li>
-          <li><span class="ico">🛠️</span><span><span class="nm">Huoltaja</span> <span class="sp">— maintainability &amp; DX</span></span></li>
+    <p class="crew-cap">terva ships <span data-fact="persona-count">sixteen personas</span> out of the box. <b>Mieli</b> takes the day-to-day coding work, and the seven-strong <b>review crew</b> below is built to be dispatched across a problem. RAATI seats three deliberation panelists, YATA-1, KUSANAGI-2 and MAGATAMA-3, who judge a question by truth, by decisiveness and by human impact, and who are convened as a panel rather than one at a time, because a lone panelist is an opinion and not a tally. Five more serve immersive play: <b>Kertoja</b> narrates a scene and voices its cast, <b>Kartoittaja</b> draws a seed several genuinely different ways, <b>Seppä</b> repairs a character card without overwriting its author, <b>Toimittaja</b> folds what a scene established back into a character, and <b>Dramaturgi</b> reads a played session for the lore and threads it has earned.</p>
+    <ul class="crew" aria-label="The built-in review crew">
+          <li class="lead-persona"><span class="ico">🧠</span><span><span class="nm">Mieli,</span> <span class="sp">coding collaborator &amp; coordinator</span></span></li>
+          <li><span class="ico">🛡️</span><span><span class="nm">Vartija,</span> <span class="sp">security review</span></span></li>
+          <li><span class="ico">🏗️</span><span><span class="nm">Arkkitehti,</span> <span class="sp">architecture review</span></span></li>
+          <li><span class="ico">🧪</span><span><span class="nm">Koestaja,</span> <span class="sp">test &amp; QA strategy</span></span></li>
+          <li><span class="ico">📈</span><span><span class="nm">Luotain,</span> <span class="sp">performance &amp; profiling</span></span></li>
+          <li><span class="ico">🧭</span><span><span class="nm">Luotsi,</span> <span class="sp">reliability &amp; release-readiness</span></span></li>
+          <li><span class="ico">📝</span><span><span class="nm">Kirjuri,</span> <span class="sp">documentation review</span></span></li>
+          <li><span class="ico">🛠️</span><span><span class="nm">Huoltaja,</span> <span class="sp">maintainability &amp; DX</span></span></li>
         </ul>
   </section>
 
@@ -571,7 +550,7 @@
     <h2 id="extend-h">extend it, in any language</h2>
     <p class="lead">
       The harness talks to the outside world over small, versioned JSON
-      protocols — so you teach terva new capabilities without touching its core,
+      protocols, so you teach terva new capabilities without touching its core,
       in whatever language you like.
     </p>
     <div class="features">
@@ -582,8 +561,8 @@
       </article>
       <article>
         <h3>MCP servers</h3>
-        <p>Attach Model Context Protocol servers as tool providers —
-           namespaced and permission-gated like everything else.</p>
+        <p>Attach Model Context Protocol servers as tool providers, namespaced
+           and permission-gated like everything else.</p>
       </article>
       <article>
         <h3>Hooks</h3>
@@ -593,12 +572,12 @@
       <article>
         <h3>Swarm</h3>
         <p>Fan work out to parallel background subagents from inside a
-           session — each bootable as its own persona.</p>
+           session, each bootable as its own persona.</p>
       </article>
       <article>
         <h3>RAATI</h3>
-        <p>Don't trust one model's first answer. Convene a panel — several
-           models, distinct seats — to argue a decision to a recorded verdict
+        <p>Don't trust one model's first answer. Convene a panel of several
+           models in distinct seats to argue a decision to a recorded verdict
            you can go back and read.</p>
       </article>
       <article>
@@ -608,15 +587,16 @@
       </article>
       <article>
         <h3>Chat connectors</h3>
-        <p>Built-in Telegram and Discord bridges — approve tool calls from
-           chat, with buttons on Discord — plus external connectors in any
-           language over the same versioned protocol.</p>
+        <p>Built-in Telegram and Discord bridges let you approve tool calls
+           from chat, with buttons on Discord, and external connectors in any
+           language speak the same versioned protocol.</p>
       </article>
       <article>
         <h3>Your language, your words</h3>
-        <p>Translate the UI — or override terva's wording <em>and its
+        <p>Translate the UI, or override terva's wording <em>and its
            model-facing prompts</em> in place, key by key. Works in English
-           too, when you just want it to say something else.</p>
+           too, when you just want it to say something else. See
+           <a href="https://github.com/terva-sh/terva/blob/release/docs/localization.md">localization</a>.</p>
       </article>
     </div>
   </section>
@@ -628,15 +608,15 @@
       <div class="split-body">
         <p class="lead">
           terva ships as a coding agent, but the harness underneath is general.
-          Compose the layers — a <b>persona</b> or <b>character card</b> (who),
+          Compose the layers, a <b>persona</b> or <b>character card</b> (who),
           an <b>extension</b> (what), a <b>connector</b> (where), and
-          <b>lore</b> that surfaces the right context on cue — and point them
+          <b>lore</b> that surfaces the right context on cue, and point them
           away from a repo.
         </p>
       </div>
       <div class="split-media">
         <div class="term">
-          <div class="term-bar">terva — beyond code</div>
+          <div class="term-bar">terva beyond code</div>
           <pre><code><span class="prompt">$ </span><span class="cmd">terva </span><span class="flag">--card</span><span class="cmd"> ./char.png</span>           <span class="comment"># chat as a character card</span>
 <span class="prompt">$ </span><span class="cmd">terva </span><span class="flag">--play --ext</span><span class="cmd"> ./world</span>        <span class="comment"># act in a simulated world</span>
 <span class="prompt">$ </span><span class="cmd">terva </span><span class="flag">--play --cast</span><span class="cmd"> gm=./gm.png</span>   <span class="comment"># a director voices a cast</span>
@@ -645,28 +625,39 @@
       </div>
     </div>
     <p class="beyond-note">
-      An extension doesn't have to be a tool — it can be a whole
+      An extension doesn't have to be a tool. It can be a whole
       <b style="color:var(--birch)">world</b>, or a bridge to a real one. Its
       tools become the agent's senses and hands, its state the world's
       memory, a live context card its awareness of its surroundings. The
-      agent perceives, decides, and acts — the same loop that edits code,
+      agent perceives, decides, and acts on the same loop that edits code,
       pointed at a simulation, a service, or a piece of hardware.
     </p>
     <ul class="triad triad-wide">
-      <li><span class="who">--play</span> — <b>act</b> in a world through its tools</li>
-      <li><span class="who">--chat</span> — <b>talk</b> with a character, no tools</li>
-      <li><span class="who">a connector</span> — <b>play</b> it from a chat thread</li>
+      <li><span class="who">--play,</span> <b>act</b> in a world through its tools</li>
+      <li><span class="who">--chat,</span> <b>talk</b> with a character, no tools</li>
+      <li><span class="who">a connector,</span> <b>play</b> it from a chat thread</li>
     </ul>
     <p class="beyond-cap">
-      The repo ships worked examples — <code>examples/extensions/world</code>, a
+      The repo ships worked examples. <code>examples/extensions/world</code> is a
       procedural place an explorer travels through tools (look, travel, gather)
-      with persisted state and a map, and <code>examples/cards</code>, a
+      with persisted state and a map, and <code>examples/cards</code> holds a
       SillyTavern character card you can chat as. A <b>--play</b> director can
       even voice a declared <b>cast</b> of actors, while <b>lore</b> surfaces
       authored context the moment it's relevant. The
       <a href="https://github.com/terva-sh/terva/blob/release/docs/personas.md">persona</a>
       and <a href="https://github.com/terva-sh/terva/blob/release/docs/extensions.md">extension</a>
       docs show how to give an agent a world of your own.
+    </p>
+    <p class="beyond-cap">
+      <b>Stage</b> is the browser surface for that play: a second web app served
+      by the same daemon, mounted at <code>/stage/</code> alongside the control
+      panel by <code>--web-stage</code>. It drives a character card or a persona
+      through an immersive conversation or a roleplay rather than a coding
+      session, and it shares the panel's transport, login, and workspace, so
+      immersive sessions sit next to coding ones. It stays off by default while
+      it matures. The
+      <a href="https://github.com/terva-sh/terva/blob/release/docs/web.md">web docs</a>
+      describe what it is made of.
     </p>
   </section>
 
@@ -691,13 +682,13 @@
     <p class="eyebrow">get it</p>
     <h2 id="install-h">install</h2>
     <dl class="install">
-      <dt>one-liner — macOS, Linux</dt>
+      <dt>one-liner for macOS and Linux</dt>
       <dd>
         <pre data-copy="curl -fsSL https://terva.sh/install.sh | bash"><code><span class="prompt">$ </span><span class="cmd">curl -fsSL https://terva.sh/install.sh | bash</span></code></pre>
         <p>Detects OS and architecture, downloads the latest release, verifies
            its SHA-256, and drops the binary on your <code>$PATH</code>.</p>
       </dd>
-      <dt>one-liner — Windows, PowerShell</dt>
+      <dt>one-liner for Windows, in PowerShell</dt>
       <dd>
         <pre data-copy="iwr -useb https://terva.sh/install.ps1 | iex"><code><span class="prompt">&gt; </span><span class="cmd">iwr -useb https://terva.sh/install.ps1 | iex</span></code></pre>
         <p>Drops <code>terva.exe</code> into <code>$HOME\bin</code> and adds it
@@ -710,10 +701,10 @@
       <dt>prebuilt binaries</dt>
       <dd>
         <p>Every <a href="https://github.com/terva-sh/terva/releases">release</a>
-           ships archives for Linux, macOS, and Windows on amd64 and arm64, plus
-           a <code>checksums.txt</code>. Each platform comes as
-           <code>terva</code> (full — what the one-liner installs) and
-           <code>terva-min</code> (lean — chat connectors left out); both unpack
+           ships archives for <span data-fact="release-platforms">Linux and macOS on amd64 and arm64, and Windows on amd64</span>, plus a <code>checksums.txt</code>. There is no
+           Windows arm64 build. Each platform comes as
+           <code>terva</code> (full: what the one-liner installs) and
+           <code>terva-min</code> (lean: chat connectors left out); both unpack
            the same <code>terva</code> command.</p>
       </dd>
       <dt>from source</dt>
@@ -726,9 +717,9 @@ make build"><code><span class="prompt">$ </span><span class="cmd">git clone http
       </dd>
     </dl>
     <p style="margin-top:1.5rem; font-size:0.92rem;">
-      Then run <code>terva</code> and type <code>/login</code> — the TUI opens
+      Then run <code>terva</code> and type <code>/login</code>. The TUI opens
       without credentials and walks you through browser-based auth: an API key
-      or a Claude Pro/Max, ChatGPT Plus/Pro, Kimi Code, or GitHub Copilot
+      or a Claude Pro/Max, ChatGPT Plus/Pro, Kimi, or GitHub Copilot
       subscription.
     </p>
   </section>
@@ -738,9 +729,11 @@ make build"><code><span class="prompt">$ </span><span class="cmd">git clone http
     <h2 id="docs-h">documentation</h2>
     <ul class="docs">
       <li><a href="https://github.com/terva-sh/terva/blob/release/docs/cli.md">cli</a><span>flags, tools, run modes, the data directory</span></li>
-      <li><a href="https://github.com/terva-sh/terva/blob/release/docs/tui.md">tui</a><span>the terminal UI — slash commands, sessions, key bindings</span></li>
-      <li><a href="https://github.com/terva-sh/terva/blob/release/docs/web.md">web</a><span><code>terva web</code> — the browser control panel</span></li>
-      <li><a href="https://github.com/terva-sh/terva/blob/release/docs/raati.md">raati</a><span>the deliberation panel — models argue to a verdict</span></li>
+      <li><a href="https://github.com/terva-sh/terva/blob/release/docs/tui.md">tui</a><span>the terminal UI: slash commands, sessions, key bindings</span></li>
+      <li><a href="https://github.com/terva-sh/terva/blob/release/docs/web.md">web</a><span><code>terva web</code>, the browser control panel and Stage</span></li>
+      <li><a href="https://github.com/terva-sh/terva/blob/release/docs/serve.md">serve</a><span>the multi-tenant supervisor, one terva per signed-in person</span></li>
+      <li><a href="https://github.com/terva-sh/terva/blob/release/docs/fleet.md">fleet</a><span>one browser panel reading daemons on other machines</span></li>
+      <li><a href="https://github.com/terva-sh/terva/blob/release/docs/raati.md">raati</a><span>the deliberation panel, where models argue to a verdict</span></li>
       <li><a href="https://github.com/terva-sh/terva/blob/release/docs/models.md">models</a><span>picking models, fallback/rescue, custom catalogs</span></li>
       <li><a href="https://github.com/terva-sh/terva/blob/release/docs/personas.md">personas</a><span>identity, the crew, authoring, swarm dispatch</span></li>
       <li><a href="https://github.com/terva-sh/terva/blob/release/docs/permissions.md">permissions</a><span>approval modes, rules, and working-directory guards</span></li>
@@ -750,13 +743,19 @@ make build"><code><span class="prompt">$ </span><span class="cmd">git clone http
       <li><a href="https://github.com/terva-sh/terva/blob/release/docs/hooks.md">hooks</a><span>veto, rewrite, or observe tool calls</span></li>
       <li><a href="https://github.com/terva-sh/terva/blob/release/docs/skills.md">skills</a><span>SKILL.md reusable instructions</span></li>
       <li><a href="https://github.com/terva-sh/terva/blob/release/docs/connectors.md">connectors</a><span>the telegram bridge &amp; external connectors</span></li>
+      <li><a href="https://github.com/terva-sh/terva/blob/release/docs/slash-commands.md">slash commands</a><span>the in-session commands, and writing your own</span></li>
+      <li><a href="https://github.com/terva-sh/terva/blob/release/docs/workflows.md">workflows</a><span>scripted multi-agent orchestration</span></li>
+      <li><a href="https://github.com/terva-sh/terva/blob/release/docs/scheduled-jobs.md">scheduled jobs</a><span>running terva on a timer</span></li>
+      <li><a href="https://github.com/terva-sh/terva/blob/release/docs/secrets.md">secrets</a><span>secrets at rest and the web bearer token</span></li>
+      <li><a href="https://github.com/terva-sh/terva/blob/release/docs/themes.md">themes</a><span>the built-in themes and authoring your own</span></li>
+      <li><a href="https://github.com/terva-sh/terva/blob/release/docs/localization.md">localization</a><span>translating the UI and overriding its wording</span></li>
       <li><a href="https://github.com/terva-sh/terva/blob/release/docs/rpc.md">rpc</a><span>embedding terva: the JSON event stream &amp; Go SDK</span></li>
     </ul>
   </section>
 
   <footer>
     <span class="rule" aria-hidden="true"></span>
-    <p><em>terva</em> is Finnish for pine tar — the traditional preservative
+    <p><em>terva</em> is Finnish for pine tar, the traditional preservative
        and cure-all that sealed boats and kept them seaworthy. Its default
        persona is <em>Mieli</em> (<em>MYEH-lee</em>), Finnish for
        &ldquo;mind&rdquo;: a mind in a preserved vessel.</p>
@@ -764,13 +763,14 @@ make build"><code><span class="prompt">$ </span><span class="cmd">git clone http
        <a href="https://github.com/patriceckhart/zot">patriceckhart/zot</a>
        and has long since gone its own way. zot continues upstream as its own
        project; terva is not a replacement, successor, or rename. Existing zot
-       installs keep working — see
+       installs keep working; see
        <a href="https://github.com/terva-sh/terva/blob/release/docs/fork.md">the
        lineage &amp; compat story</a>.</p>
     <p><a href="https://github.com/terva-sh/terva">github.com/terva-sh/terva</a>
        · MIT licensed</p>
   </footer>
 </main>
+<script src="/assets/asciinema-player.min.js"></script>
 <script>
   document.documentElement.classList.add("js");
 
@@ -801,186 +801,28 @@ make build"><code><span class="prompt">$ </span><span class="cmd">git clone http
     reveals.forEach(el => io.observe(el));
   }
 
-  /* ---- demo terminal: autoplaying, cyclable terva TUI sessions ----
-     Declarative clips; add an example = append one object to CLIPS. */
+  /* ---- demo terminal: the recorded cast, played by the vendored asciinema player.
+     The scene is assets/terminal-demo.cast, 100 by 30; see docs/vanity/LAYOUT.md. */
   (function () {
-    const CLIPS = [
-      {
-        launch: 'terva',
-        mode: 'code',
-        status: { tokens: '↑2.1k ↓480', cost: '$0.03' },
-        steps: [
-          { user: 'what does `make build` produce?' },
-          { think: 700, msg: 'reading the Makefile' },
-          { tool: 'bash make -n build', out: ['go build -o ./bin/terva ./cmd/terva'] },
-          { assistant: 'A single static binary at **./bin/terva** — no codegen, no runtime. Go all the way down.' },
-        ],
-      },
-      {
-        launch: 'terva --chat',
-        mode: 'chat',
-        persona: { emoji: '🧠', name: 'Mieli' },
-        status: { tokens: '↑1.4k ↓620' },
-        steps: [
-          { user: 'hype me up, i have to refactor a 4000-line file' },
-          { think: 750, msg: 'letting it settle' },
-          { assistant: 'Four thousand lines is just one line, four thousand times braver. Open it — I\'ll hold the map.' },
-          { user: 'that\'s weirdly motivating' },
-          { think: 500, msg: 'considering' },
-          { assistant: 'Pine tar was also just sap that refused to quit. Go.' },
-        ],
-      },
-      {
-        launch: 'terva --play --ext ./ios-emulator',
-        mode: 'play',
-        persona: { emoji: '🧪', name: 'Koestaja' },
-        status: { tokens: '↑3.2k ↓1.1k' },
-        steps: [
-          { user: 'run the smoke-test suite' },
-          { think: 1000, msg: 'booting the simulator' },
-          { assistant: 'Booting the sim and walking launch → login → home.' },
-          { tool: 'emulator boot iPhone-15', out: ['Booted (iOS 18.2).', 'Home screen visible.'] },
-          { tool: "emulator tap 'Sign in'", out: ['Login sheet presented.'] },
-          { tool: 'emulator screenshot home', out: ['saved home.png (390×844)'] },
-          { assistant: 'Smoke test **passed** — 5/5: launch, login, home render, nav, sign-out. ✓' },
-        ],
-      },
-      {
-        launch: 'terva "review the auth changes before I merge"',
-        mode: 'code',
-        status: { tokens: '↑4.0k ↓2.2k', swarm: '⛭ 3 agents' },
-        steps: [
-          { user: 'review the auth changes before I merge' },
-          { think: 800, msg: 'dispatching the crew' },
-          { assistant: 'Fanning the review crew across the diff.' },
-          { tool: 'swarm dispatch review-crew', out: ['🛡️  Vartija — security', '📈  Luotain — hot paths', '🏗️  Arkkitehti — seams'] },
-          { think: 900, msg: 'gathering findings' },
-          { assistant: '**Vartija:** `verifyToken` compares with `==` — timing leak. **Luotain:** session load is N+1. **Arkkitehti:** seams look clean. Two fixes queued before merge.' },
-        ],
-      },
-    ];
-
-    const CPS_USER = 32, CPS_OUT = 15, SPIN_MS = 90;
-    const SPIN_FRAMES = ['⠋','⠙','⠚','⠞','⠖','⠦','⠴','⠲','⠳','⠓'];
-    const SPIN_MSGS = { code: 'thinking', chat: 'reflecting', play: 'considering' };
-    // model rotates across providers so the demo never reads as single-provider.
-    // Code-mode clips show it in the status bar; immersive clips show the persona.
-    const MODELS = ['(anthropic) opus-4.8', '(openai) gpt-5.5', '(google) gemini-3-pro', '(deepseek) v4-pro', '(z.ai) glm-5.2'];
-
     const screen = document.getElementById('dt-screen');
-    if (!screen) return;
-    const launchEl = document.getElementById('dt-launch');
-    const idxEl = document.getElementById('dt-idx');
-    const btnNext = document.getElementById('dt-next');
-    const btnReplay = document.getElementById('dt-replay');
+    if (!screen || !window.AsciinemaPlayer) return;
+    if (!window.matchMedia('(min-width: 52rem)').matches) return; // desktop only
     const lowMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const isDesktop = window.matchMedia('(min-width: 52rem)').matches;
-    if (!isDesktop) return; // desktop only — don't run the animation on mobile
-
-    const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
-    let tok = 0, idx = 0;
-
-    const fmt = (s) => s.replace(/[&<>]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[c]))
-      .replace(/\*\*(.+?)\*\*/g, '<b>$1</b>').replace(/`(.+?)`/g, '<span class="em">$1</span>');
-    const fmtPartial = (s) => {
-      let t = s;
-      if (((t.match(/\*\*/g) || []).length) % 2) t = t.replace(/\*\*(?=[^*]*$)/, '');
-      if (((t.match(/`/g) || []).length) % 2) t = t.replace(/`(?=[^`]*$)/, '');
-      return fmt(t);
-    };
-    const el = (cls, html) => { const d = document.createElement('div'); if (cls) d.className = cls; if (html != null) d.innerHTML = html; return d; };
-
-    let busy = null, activeModel = '';
-    function renderStatus(statusEl, clip) {
-      const atoms = [];
-      if (busy) {
-        const frame = SPIN_FRAMES[Math.floor((Date.now() - busy.start) / SPIN_MS) % SPIN_FRAMES.length];
-        const secs = Math.floor((Date.now() - busy.start) / 1000);
-        atoms.push('<span class="spin">' + frame + ' ' + busy.msg + '</span>' + (secs > 0 ? ' <span class="sep">- ' + secs + 's</span>' : ''));
-      }
-      if (clip.persona && clip.mode !== 'code') atoms.push('<span class="persona">' + clip.persona.emoji + ' ' + clip.persona.name + '</span>');
-      else atoms.push(activeModel);
-      if (clip.status.tokens) atoms.push(clip.status.tokens);
-      if (clip.status.swarm) atoms.push(clip.status.swarm);
-      if (clip.status.cost && clip.mode === 'code') atoms.push(clip.status.cost);
-      statusEl.innerHTML = atoms.join(' <span class="sep">·</span> ');
-    }
-
-    async function play(clip, instant) {
-      const my = ++tok;
-      busy = null;
-      activeModel = clip.status.model || MODELS[Math.floor(Math.random() * MODELS.length)];
-      launchEl.textContent = clip.launch;
-      screen.innerHTML = '';
-      const transcript = el('dt-transcript'), band = el('dt-band'), statusEl = el('dt-status'), promptEl = el('dt-prompt');
-      promptEl.innerHTML = '<span class="bar" aria-hidden="true">▌ </span><span class="typed"></span><span class="dt-cursor" aria-hidden="true"></span>';
-      band.appendChild(statusEl); band.appendChild(promptEl);
-      screen.appendChild(transcript); screen.appendChild(band);
-      const typed = promptEl.querySelector('.typed');
-      renderStatus(statusEl, clip);
-      const spinTimer = setInterval(() => { if (busy && my === tok) renderStatus(statusEl, clip); }, SPIN_MS);
-      const scrollTail = () => { transcript.scrollTop = transcript.scrollHeight; };
-      const addUser = (text) => { transcript.appendChild(el('dt-user', '<span class="bar" aria-hidden="true">▌</span><span>' + fmt(text) + '</span>')); scrollTail(); };
-
-      try {
-        for (const step of clip.steps) {
-          if (my !== tok) return;
-          if (step.user != null) {
-            if (instant) { addUser(step.user); typed.textContent = ''; continue; }
-            for (let i = 1; i <= step.user.length; i++) { if (my !== tok) return; typed.textContent = step.user.slice(0, i); await sleep(CPS_USER); }
-            await sleep(320); addUser(step.user); typed.textContent = ''; await sleep(180);
-          } else if (step.think != null) {
-            busy = { msg: step.msg || SPIN_MSGS[clip.mode] || 'thinking', start: Date.now() };
-            renderStatus(statusEl, clip);
-            if (!instant) await sleep(step.think);
-            busy = null; renderStatus(statusEl, clip);
-          } else if (step.assistant != null) {
-            const d = el('dt-assistant', ''); transcript.appendChild(d); scrollTail();
-            if (instant) { d.innerHTML = fmt(step.assistant); scrollTail(); continue; }
-            for (let i = 1; i <= step.assistant.length; i++) { if (my !== tok) return; d.innerHTML = fmtPartial(step.assistant.slice(0, i)); scrollTail(); await sleep(CPS_OUT); }
-            d.innerHTML = fmt(step.assistant); scrollTail(); await sleep(260);
-          } else if (step.tool != null) {
-            const sp = step.tool.indexOf(' ');
-            const nm = sp < 0 ? step.tool : step.tool.slice(0, sp);
-            const args = sp < 0 ? '' : step.tool.slice(sp + 1);
-            const isErr = !!step.err;
-            const box = el('dt-tool' + (isErr ? ' err' : ''),
-              '<span class="hd"><span class="mark">' + (isErr ? '×' : '') + '</span><span class="nm">' + fmt(nm) + '</span> ' + fmt(args) + '</span><div class="body"></div>');
-            transcript.appendChild(box); scrollTail();
-            const body = box.querySelector('.body');
-            if (instant) { body.textContent = (step.out || []).join('\n'); scrollTail(); continue; }
-            busy = { msg: nm, start: Date.now() };
-            body.innerHTML = '<span class="run">running…</span>';
-            renderStatus(statusEl, clip); scrollTail();
-            await sleep(650);
-            if (my !== tok) return;
-            busy = null; renderStatus(statusEl, clip);
-            const lines = step.out || [];
-            body.textContent = '';
-            for (let i = 0; i < lines.length; i++) { if (my !== tok) return; body.textContent += (i ? '\n' : '') + lines[i]; scrollTail(); await sleep(120); }
-            await sleep(220);
-          }
-        }
-      } finally { clearInterval(spinTimer); }
-    }
-
-    const setIdx = (i) => { idx = (i + CLIPS.length) % CLIPS.length; idxEl.textContent = (idx + 1) + '/' + CLIPS.length; };
-    const startClip = (i, instant) => { setIdx(i); play(CLIPS[idx], instant); };
-
-    btnNext.addEventListener('click', () => startClip(idx + 1, false));
-    btnReplay.addEventListener('click', () => startClip(idx, false));
-
-    const first = Math.floor(Math.random() * CLIPS.length);
-    if (lowMotion) {
-      startClip(first, true); // render a finished frame, no animation
-    } else if ('IntersectionObserver' in window) {
-      let started = false;
+    const player = AsciinemaPlayer.create(screen.dataset.src, screen, {
+      cols: 100, rows: 30, fit: 'width', preload: true, loop: true, idleTimeLimit: 2,
+      poster: 'npt:10', theme: 'terva', controls: 'auto',
+      terminalFontFamily: 'ui-monospace, "JetBrains Mono", "Cascadia Code", "SF Mono", Menlo, Consolas, monospace',
+    });
+    if (lowMotion) return; // the poster is the finished scene; no animation
+    let started = false;
+    const start = () => { if (started) return; started = true; player.play(); };
+    if ('IntersectionObserver' in window) {
       const io2 = new IntersectionObserver((ents) => {
-        for (const e of ents) if (e.isIntersecting && !started) { started = true; startClip(first, false); io2.disconnect(); }
+        for (const e of ents) if (e.isIntersecting) { start(); io2.disconnect(); }
       }, { threshold: 0.3 });
       io2.observe(screen);
     } else {
-      startClip(first, false);
+      start();
     }
   })();
 </script>

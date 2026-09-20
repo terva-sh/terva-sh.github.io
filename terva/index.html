@@ -3,13 +3,13 @@
   Vanity-import page for the terva module: the phase-3 prerequisite
   from docs/plans/rename-terva.md. Deploy so that
   https://terva.sh/terva (any path under it, with or without
-  ?go-get=1) serves this document — a static host with one rewrite
+  ?go-get=1) serves this document. A static host with one rewrite
   rule is enough.
 
   The go-import meta is what `go get terva.sh/terva` resolves; the
   module's code identity stays terva.sh/terva forever while the
   backing repo (currently github.com/terva-sh/terva, the public
-  mirror fed by release-cut) can move with zero import rewrites —
+  mirror fed by release-cut) can move with zero import rewrites,
   the filippo.io/age pattern.
 
   go-source makes pkg.go.dev link source listings. The mirror's
