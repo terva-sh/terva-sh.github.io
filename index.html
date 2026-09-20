@@ -369,13 +369,13 @@
           <span class="dots" aria-hidden="true">● ● ●</span>
           <span class="launch">terva</span>
           <span class="grow"></span>
-          <span class="idx">a recording, replayed from a session transcript</span>
+          <span class="idx">a recording, replayed from a session transcript at half speed</span>
         </div>
         <div class="dt-screen" id="dt-screen" data-src="/assets/terminal-demo.cast">
           <noscript><p class="dt-fallback">The recording needs JavaScript. The same scene is an animation in the <a href="https://github.com/terva-sh/terva#readme">README</a>.</p></noscript>
         </div>
       </div>
-      <p class="demo-cap">A token compare fixed in constant time. The agent reads, asks before it edits, asks before it runs the tests, then asks whether to commit.</p>
+      <p class="demo-cap">A token compare fixed in constant time. The agent asks before each edit and command; one is refused, one is widened to the session, and a question gets a note. Played at half speed.</p>
     </div>
     <div class="get">
       <pre data-copy="curl -fsSL https://terva.sh/install.sh | bash"><code><span class="prompt">$ </span><span class="cmd">curl -fsSL https://terva.sh/install.sh | bash</span><span class="cursor" aria-hidden="true"></span></code></pre>
@@ -810,7 +810,7 @@ make build"><code><span class="prompt">$ </span><span class="cmd">git clone http
     const lowMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const player = AsciinemaPlayer.create(screen.dataset.src, screen, {
       cols: 100, rows: 30, fit: 'width', preload: true, loop: true, idleTimeLimit: 2,
-      poster: 'npt:10', theme: 'terva', controls: 'auto',
+      poster: 'npt:49', theme: 'terva', controls: 'auto',
       terminalFontFamily: 'ui-monospace, "JetBrains Mono", "Cascadia Code", "SF Mono", Menlo, Consolas, monospace',
     });
     if (lowMotion) return; // the poster is the finished scene; no animation
