@@ -178,7 +178,7 @@
     }
     .features h3::before { content: "* "; color: var(--orange); }
     .features p { margin: 0; font-size: 0.92rem; }
-    .features code, .prose code {
+    .features code, .prose code, .layer-steps code {
       background: var(--deep-tar); border-radius: 3px;
       padding: 0.05rem 0.3rem; font-size: 0.88em;
     }
@@ -339,6 +339,88 @@
     footer p { max-width: 44rem; margin: 0.6rem auto; }
     footer em { color: var(--ink); font-style: italic; }
 
+    /* three layers: the logo peeled apart. An inline SVG built from the logo's
+       own paths (assets/brand/terva-logo.svg); CSS transitions keyed on the
+       stage's data-step move the parts, and the script at the end steps it.
+       Without JS the stage shows the whole logo and every caption is readable.
+       See docs/vanity/LAYOUT.md, "The three layers". */
+    .layers {
+      display: grid; gap: 1.5rem; align-items: start;
+      grid-template-columns: minmax(0, 1fr);
+    }
+    .layers-media, .layer-steps { min-width: 0; }
+    @media (min-width: 52rem) {
+      .layers { grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); gap: 2.5rem; }
+      .layers-media { position: sticky; top: 1.5rem; }
+    }
+    .layers-stage {
+      background: var(--deep-tar); border: 1px solid var(--slate); border-radius: 8px;
+      box-shadow: 0 18px 50px -28px rgba(0,0,0,0.9);
+    }
+    .layers-stage svg { display: block; width: 100%; height: auto; }
+    .layers-stage svg text { font-family: inherit; }
+    .lp { transition: transform 0.9s cubic-bezier(.65,0,.35,1), opacity 0.6s ease; }
+    .lp-core { transform-box: fill-box; transform-origin: center; }
+    .lp-scene { transform: translate(288px, 0); }
+    /* Labels and the dashed pieces leave fast and arrive once the parts have
+       settled, so two steps' labels never overlap mid-move. */
+    .lp-alt, .lp-label { opacity: 0; transition: opacity 0.25s ease; }
+    /* 1: the base peels away */
+    .layers-stage[data-step="1"] .lp-base { transform: translate(0, 150px); }
+    .layers-stage[data-step="1"] :is(.lp-shell, .lp-core) { opacity: 0.25; }
+    /* 2: the harness opens */
+    .layers-stage[data-step="2"] .lp-base { transform: translate(0, 150px); opacity: 0.25; }
+    .layers-stage[data-step="2"] .lp-core { opacity: 0.25; }
+    /* 3: the core, with every part apart and labelled */
+    .layers-stage[data-step="3"] .lp-base { transform: translate(0, 150px); }
+    .layers-stage[data-step="3"] .lp-core { transform: scale(1.18); }
+    .layers-stage:is([data-step="2"], [data-step="3"]) .lp-tl { transform: translate(-110px, -70px); }
+    .layers-stage:is([data-step="2"], [data-step="3"]) .lp-tr { transform: translate(110px, -70px); }
+    .layers-stage:is([data-step="2"], [data-step="3"]) .lp-bl { transform: translate(-110px, 60px); }
+    .layers-stage:is([data-step="2"], [data-step="3"]) .lp-br { transform: translate(110px, 60px); }
+    /* 4: any piece. terva's core crosses to a harness of your own, and another
+       agent takes its place inside terva's harness. The scene shifts so the
+       pair sits centred: the logo at 512 and the dashed shell at 1152. */
+    .layers-stage[data-step="4"] .lp-scene { transform: translate(-32px, 0); }
+    .layers-stage[data-step="4"] .lp-core { transform: translate(640px, 0); }
+    .layers-stage[data-step="4"] .lp-alt { opacity: 1; transition: opacity 0.5s ease 0.7s; }
+    .layers-stage[data-step="1"] .lp-label[data-for~="1"],
+    .layers-stage[data-step="2"] .lp-label[data-for~="2"],
+    .layers-stage[data-step="3"] .lp-label[data-for~="3"],
+    .layers-stage[data-step="4"] .lp-label[data-for~="4"] { opacity: 1; transition: opacity 0.5s ease 0.7s; }
+    .layers-controls {
+      display: flex; justify-content: space-between; align-items: center; gap: 1rem;
+      margin-top: 0.6rem; font-size: 0.82rem; color: var(--faint);
+    }
+    .layers-controls button {
+      background: var(--charcoal); color: var(--faint);
+      border: 1px solid var(--slate); border-radius: 4px;
+      font: inherit; padding: 0.1rem 0.6rem; cursor: pointer;
+    }
+    .layers-controls button:hover { color: var(--birch); border-color: var(--faint); }
+    html:not(.js) .layers-controls { display: none; }
+    .layer-steps { list-style: none; margin: 0; padding: 0; counter-reset: none; }
+    .layer-steps li {
+      border-left: 3px solid var(--slate-soft); padding: 0.2rem 0 0.2rem 1rem;
+      margin: 0 0 1.1rem; transition: border-color 0.3s ease;
+    }
+    .layer-steps button {
+      background: none; border: 0; padding: 0; font: inherit; cursor: pointer;
+      color: var(--birch); font-weight: 600; text-align: left;
+    }
+    .layer-steps button::before { content: "* "; color: var(--orange); }
+    .layer-steps p { margin: 0.3rem 0 0; font-size: 0.9rem; }
+    .layer-steps li.on { border-left-color: var(--step-color, var(--orange)); }
+    .layer-steps li.on button { color: var(--step-color, var(--hot)); }
+    .layer-steps li[data-step="0"], .layer-steps li[data-step="4"] { --step-color: var(--hot); }
+    .layer-steps li[data-step="1"] { --step-color: var(--cursor); }
+    .layer-steps li[data-step="2"] { --step-color: var(--birch); }
+    .layer-steps li[data-step="3"] { --step-color: var(--orange); }
+    @media (prefers-reduced-motion: reduce) {
+      /* important: the step states above carry their own delayed transitions */
+      .lp, .layer-steps li { transition: none !important; }
+    }
+
     /* phone polish: tighter gutters and spacing, and a smaller terminal
        font so the mocks fit more per line and need less internal scrolling.
        Guarded by max-width so the desktop layout is untouched. */
@@ -360,8 +442,8 @@
     <p class="pitch">
       An <strong>agent harness</strong> in a single static Go binary, and a
       coding agent out of the box that is open to anything you can wire a tool to.
-      One hardened core, many front ends, <strong>guardrails by default</strong>,
-      pluggable in any language.
+      One hardened core, one harness, many front ends,
+      <strong>guardrails by default</strong>, pluggable in any language.
     </p>
     <div class="demo" id="demo">
       <div class="dt" aria-label="A recorded terva session">
@@ -395,9 +477,10 @@
     <p class="eyebrow">what it is</p>
     <h2 id="features-h">one core, wide open</h2>
     <p class="lead">
-      One hardened, test-backed core holds the agent loop, the event wire, the
-      permission policy, and <span data-fact="provider-count">25+ model providers</span>. That core is projected through
-      many front ends, and it is extensible in any language.
+      One hardened, test-backed agent core holds the loop, the event wire, and
+      one interface to <span data-fact="provider-count">25+ model providers</span>. One harness around it holds the
+      permission policy, sessions and credentials, and projects it through many
+      front ends. Every piece is extensible in any language.
     </p>
     <div class="features">
       <article>
@@ -439,6 +522,101 @@
            rather than parallel reimplementations, with golden and end-to-end
            harnesses backing every change.</p>
       </article>
+    </div>
+  </section>
+
+  <section id="layers" aria-labelledby="layers-h" class="reveal">
+    <p class="eyebrow">take what you need</p>
+    <h2 id="layers-h">three layers, any piece</h2>
+    <p class="lead">
+      The logo is the architecture. The wildcard at the centre is the agent
+      core, the shell around it is the harness, and the block beneath is the
+      base, where terva meets the world. Each layer stands on its own, so you
+      can take the whole binary or only the piece you need.
+    </p>
+    <div class="layers">
+      <div class="layers-media">
+        <div class="layers-stage" id="layers-stage" data-step="0">
+          <!-- The part paths are copied from assets/brand/terva-logo.svg and only
+               moved; recopy them if the logo changes. Scene coordinates keep the
+               logo's own centre at (512, 496). -->
+          <svg viewBox="0 -20 1600 1120" role="img" aria-labelledby="layers-svg-t">
+            <title id="layers-svg-t">The terva logo, pulled apart into the agent core, the harness and the base</title>
+            <g class="lp lp-scene">
+              <g class="lp lp-alt" fill="none" stroke="#7A7979" stroke-width="12" stroke-dasharray="30 22">
+                <path d="M1152 161L1452 323L1452 669L1152 831L852 669L852 323Z"/>
+                <circle cx="512" cy="496" r="112"/>
+              </g>
+              <g class="lp lp-shell" fill="#F5F1E8">
+                <path class="lp lp-tl" d="M492 161.14L212 322.79L212 477L288 477L288 366.67L492 248.89Z"/>
+                <path class="lp lp-tr" d="M532 161.14L812 322.79L812 477L736 477L736 366.67L532 248.89Z"/>
+                <path class="lp lp-bl" d="M212 515L212 669.21L373.71 762.57L407.76 694.47L288 625.33L288 515Z"/>
+                <path class="lp lp-br" d="M812 515L812 669.21L650.29 762.57L616.24 694.47L736 625.33L736 515Z"/>
+              </g>
+              <g class="lp lp-core" fill="#F29100">
+                <rect x="488" y="387" width="48" height="218"/>
+                <rect x="488" y="387" width="48" height="218" transform="rotate(60 512 496)"/>
+                <rect x="488" y="387" width="48" height="218" transform="rotate(-60 512 496)"/>
+              </g>
+              <path class="lp lp-base" fill="#FDB515" d="M442.47 702L581.53 702A4 4 0 0 1 585.11 704.21L636.76 807.53A10 10 0 0 1 627.82 822L396.18 822A10 10 0 0 1 387.24 807.53L438.89 704.21A4 4 0 0 1 442.47 702Z"/>
+              <g font-size="52" text-anchor="middle">
+                <text class="lp lp-label" data-for="2 3" x="512" y="40" fill="#F5F1E8">harness</text>
+                <text class="lp lp-label" data-for="3" x="512" y="710" fill="#F29100">agent core</text>
+                <text class="lp lp-label" data-for="1 3" x="512" y="1060" fill="#FDB515">base</text>
+                <text class="lp lp-label" data-for="4" x="512" y="930" fill="#C7C1B2">terva's harness</text>
+                <text class="lp lp-label" data-for="4" x="512" y="995" fill="#7A7979">+ another agent</text>
+                <text class="lp lp-label" data-for="4" x="1152" y="930" fill="#C7C1B2">terva's core</text>
+                <text class="lp lp-label" data-for="4" x="1152" y="995" fill="#7A7979">+ your harness</text>
+              </g>
+            </g>
+          </svg>
+        </div>
+        <div class="layers-controls">
+          <span id="layers-now" aria-live="polite">the whole of terva</span>
+          <button type="button" id="layers-play" aria-controls="layers-stage">pause</button>
+        </div>
+      </div>
+      <ol class="layer-steps" aria-label="The layers, one step at a time">
+        <li data-step="0" class="on">
+          <button type="button" aria-controls="layers-stage">the whole of terva</button>
+          <p>One static binary with all three layers in place, wired for software
+             work. Most people start here, and never need to take it apart.</p>
+        </li>
+        <li data-step="1">
+          <button type="button" aria-controls="layers-stage">the base</button>
+          <p>The footer block. The front ends, which are the terminal, the browser,
+             your editor over ACP, and chat, and the capability from outside the
+             binary: tools, extensions, MCP servers, skills and connectors. Add or
+             swap any of them, in any language, without touching the rest.</p>
+        </li>
+        <li data-step="2">
+          <button type="button" aria-controls="layers-stage">the harness</button>
+          <p>The shell. terva's composition and its conventions: configuration,
+             approval modes and permission rules, sessions on disk, credentials,
+             and the daemon every front end talks to. Take it whole from Go with
+             the SDK, or from any language over <code>terva rpc</code>.</p>
+        </li>
+        <li data-step="3">
+          <button type="button" aria-controls="layers-stage">the agent core</button>
+          <p>The wildcard. The loop and the wire: events, tools, the permission
+             gate, compaction and cost, and one interface over every model
+             provider. It reads no file and no environment variable, so your own
+             program can host it with its own conventions.
+             <code>examples/harness</code> is an agent built from the core alone.</p>
+        </li>
+        <li data-step="4">
+          <button type="button" aria-controls="layers-stage">any piece you want</button>
+          <p>Put terva's core under a harness of your own. Or keep terva's harness
+             and conventions and put another agent at the centre: terva can drive
+             Claude Code as a worker, briefed from your project's
+             <code>AGENTS.md</code>, asking terva for any approval it needs, with
+             its progress on terva's task board. That one is off by default, behind
+             <code>external_workers_enabled</code>. terva can also be the worker
+             under someone else's harness, with <code>terva rpc --portable</code>.
+             <a href="https://github.com/terva-sh/terva/blob/release/docs/embedding.md">Embedding terva</a>
+             compares the ways in.</p>
+        </li>
+      </ol>
     </div>
   </section>
 
@@ -800,6 +978,49 @@ make build"><code><span class="prompt">$ </span><span class="cmd">git clone http
     }, { rootMargin: "0px 0px -10% 0px", threshold: 0.08 });
     reveals.forEach(el => io.observe(el));
   }
+
+  /* ---- three layers: step the logo apart. The CSS does the motion; this only
+     sets data-step. It plays once the stage is in view, pauses when it leaves,
+     and stops for good when the reader picks a step. Reduced motion never
+     autoplays. See docs/vanity/LAYOUT.md, "The three layers". */
+  (function () {
+    const stage = document.getElementById('layers-stage');
+    if (!stage) return;
+    const items = [...document.querySelectorAll('.layer-steps li')];
+    const now = document.getElementById('layers-now');
+    const play = document.getElementById('layers-play');
+    const holds = [3200, 5200, 5200, 5600, 8000]; // ms on each step
+    const lowMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let step = 0, timer = null, playing = !lowMotion, inView = false;
+
+    const show = (n) => {
+      step = n;
+      stage.dataset.step = String(n);
+      items.forEach((li, i) => li.classList.toggle('on', i === n));
+      now.textContent = items[n].querySelector('button').textContent;
+    };
+    const schedule = () => {
+      clearTimeout(timer);
+      if (playing && inView) timer = setTimeout(() => { show((step + 1) % items.length); schedule(); }, holds[step]);
+    };
+    const setPlaying = (p) => {
+      playing = p;
+      play.textContent = p ? 'pause' : 'play';
+      schedule();
+    };
+    items.forEach((li, i) => li.querySelector('button').addEventListener('click', () => {
+      show(i); setPlaying(false);
+    }));
+    play.addEventListener('click', () => setPlaying(!playing));
+    if (lowMotion) play.textContent = 'play';
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver((ents) => {
+        for (const e of ents) { inView = e.isIntersecting; schedule(); }
+      }, { threshold: 0.4 }).observe(stage);
+    } else {
+      inView = true; schedule();
+    }
+  })();
 
   /* ---- demo terminal: the recorded cast, played by the vendored asciinema player.
      The scene is assets/terminal-demo.cast, 100 by 30; see docs/vanity/LAYOUT.md. */
