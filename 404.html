@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <!--
-  Catch-all for the terva.sh vanity import (see terva/index.html for
-  the primary page). `go get terva.sh/terva/packages/...` fetches the
+  Catch-all for the terva.sh vanity imports (see terva/index.html and
+  rihma/index.html for the primary pages). It carries each module's
+  meta; the go tool uses only the one whose prefix matches the path. `go get terva.sh/terva/packages/...` fetches the
   FULL package path with ?go-get=1; on a static host those deep paths
   404, and the go tool parses go-import meta out of the 404 body,
   the standard GitHub Pages vanity-domain pattern. Verify with a real
@@ -16,6 +17,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="go-import" content="terva.sh/terva git https://github.com/terva-sh/terva">
   <meta name="go-source" content="terva.sh/terva https://github.com/terva-sh/terva https://github.com/terva-sh/terva/tree/release{/dir} https://github.com/terva-sh/terva/blob/release{/dir}/{file}#L{line}">
+  <meta name="go-import" content="terva.sh/rihma git https://github.com/terva-sh/rihma">
+  <meta name="go-source" content="terva.sh/rihma https://github.com/terva-sh/rihma https://github.com/terva-sh/rihma/tree/release{/dir} https://github.com/terva-sh/rihma/blob/release{/dir}/{file}#L{line}">
   <title>404, terva.sh</title>
   <meta name="robots" content="noindex">
   <meta name="theme-color" content="#11100E">
