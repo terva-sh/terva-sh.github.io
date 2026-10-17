@@ -881,9 +881,11 @@
         <p>Every <a href="https://github.com/terva-sh/terva/releases">release</a>
            ships archives for <span data-fact="release-platforms">Linux and macOS on amd64 and arm64, and Windows on amd64</span>, plus a <code>checksums.txt</code>. There is no
            Windows arm64 build. Each platform comes as
-           <code>terva</code> (full: what the one-liner installs) and
-           <code>terva-min</code> (lean: chat connectors left out); both unpack
-           the same <code>terva</code> command.</p>
+           <code>terva</code> (full, with the desktop window: what the one-liner
+           installs) and <code>terva-min</code> (lean: chat connectors and desktop
+           left out); both unpack the same <code>terva</code> command. On Linux
+           the full build needs glibc, so on musl the one-liner installs
+           <code>terva-min</code>.</p>
       </dd>
       <dt>from source</dt>
       <dd>
